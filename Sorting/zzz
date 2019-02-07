@@ -1,0 +1,4 @@
+//////passing2DArray
+//don't pass the column or array position but pass the array size into the function.
+//https://stackoverflow.com/questions/8767166/passing-a-2d-array-to-a-c-function
+//

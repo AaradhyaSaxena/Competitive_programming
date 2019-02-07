@@ -1,0 +1,9 @@
+// In symmetric.cpp
+//// In the question, the input does not have spaces in between different numbers of the array
+//// so when we use int mat[][] then it takes the whole first line as a single entry, but when //// we use char mat[][] the different letters of each line are taken as single entries.
+
+// Left or Right
+//// If we enter a character in int, it will not read it. It won't just automatically take its ASCII value.
+//// But if we put a integer in character it will take the ASCII value of the integer.
+
+//
