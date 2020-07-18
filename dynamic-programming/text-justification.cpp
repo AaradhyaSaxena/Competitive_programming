@@ -19,11 +19,11 @@ void solveWordWrap (int l[], int n, int M){
   
     // calculate extra spaces in a single line. The value extra[i][j] indicates extra spaces 
     // if words from word number i to j are placed in a single line  
-    for (i = 1; i <= n; i++){  
-        extras[i][i] = M - l[i-1];  
+    for (i = 1; i <= n; i++){
+        extras[i][i] = M - l[i-1];
         for (j = i+1; j <= n; j++){
             extras[i][j] = extras[i][j-1] - l[j-1] - 1; 
-        } 
+        }
     }  
   
     // Calculate line cost corresponding to the above calculated extra spaces. 
