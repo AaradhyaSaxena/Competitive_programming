@@ -1,64 +1,40 @@
 //// https://practice.geeksforgeeks.org/problems/word-break/0
 
-int wordBreak(string A, vector<string> &B) {
-    unordered_set<string> us;
-    
-    for(int i=0;i<B.size();i++)
-        us.insert(B[i]);
-    
-    int n = A.length();
-    
-    vector<bool> dp(n+1);
-    dp[0] = true;
-    
-    for(int i=1; i<n+1; i++){
-        for(int j = i-1; j >= max(0,i-20); j--){
-            string temp = A.substr(j,i-j);
-            if(dp[j] && us.count(temp)){
-                dp[i] = true;
-                break;
-            }
-        }
-    }
-    return dp[n];
-}
-
-//////// again!!
-
 #include <bits/stdc++.h>
 using namespace std;
 
 unordered_map<string,bool> mp;
-int dp[2001][2001];
 
-int find(int start,int len,string &s){
-    int ans = 0;
-    if(len>s.size()) return 0;
-    if(start>=s.size()) return 1;
-    if(dp[start][len] != -1) return dp[start][len];
-    if(mp[s.substr(start,len)] == 1) ans |= find(start+len,1,s);
-    ans |= find(start,len+1,s);
-    return dp[start][len] = ans;
-}
 int main() {
-	int t;
-	cin>>t;
-	while(t--){
-	    int n;
-	    cin>>n;
-	    memset(dp,-1,sizeof(dp));
-	    mp.clear();
-	    for(int i=0;i<n;i++){
-	        string s;
-	        cin>>s;
-	        mp[s] = 1;
-	    }
-	    string s;
-	    cin>>s;
-	    int ans = find(0,1,s);
-	    cout<<ans<<endl;
-	}
-	return 0;
+    int t;
+    cin>>t;
+    while(t--){
+        int n;
+        cin>>n;
+        mp.clear();
+        for(int i=0;i<n;i++){
+            string s;
+            cin>>s;
+            mp[s] = 1;
+        }
+        string s, temp;
+        cin>>s;
+        int len = s.length();
+        int dp[len+1];
+        memset(dp,0,sizeof(dp));
+        dp[0] = 1;
+        for(int i=1; i<=len; i++){
+            for(int j=i-1; j>=0; j--){
+                temp = s.substr(j,i-j);
+                if(mp.find(temp) != mp.end()){
+                    dp[i] |= dp[j];
+                }
+            }
+        }
+        int ans = (dp[len]==1)?1 :0;
+        cout<<ans<<endl;
+    }
+    return 0;
 }
 
 //////////////////////////
