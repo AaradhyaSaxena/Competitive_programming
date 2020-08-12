@@ -1,177 +1,53 @@
-//////
+//////// https://codeforces.com/contest/1395
+/// p2
+#include <bits/stdc++.h>
+using namespace std;
 
-int Solution::solve(int A, int B, int C, int D, vector<string> &E) {
+bool visited[100][100];
+int movex[4] = {0,1,0,-1};
+int movey[4] = {1,0,-1,0};
+vector<pair<int,int>> ans;
 
-    queue<pair<int,pair<int,int>>>q;
+bool islegal(int n, int m, int x, int y){
+    if(x>0 and x<=n and y>0 and y<=m){
+        return true;
+    }return false;
+}
 
-    q.push({0,make_pair(A-1,B-1)});
-
-    //vector<vector<int>>arr(E.size(),vector<int>(E[0].size(),0));
-
-    for(int i=0;i<E.size();i++)
-
-    for(int j=0;j<E[0].size();j++)
-
-    {
-
-    if(E[i][j]=='1')
-
-    {
-
-        
-
-        E[i][j]='?';
-
+void move(int n,int m,int &x,int &y, int &left){
+    if(left == 0)
+        return;
+    for(int k=1; k<max(n,m); k++){
+        for(int i=0; i<4; i++){
+            int X = x + k*movex[i], Y = y + k*movey[i];
+            if(islegal(n,m,X,Y) and visited[X-1][Y-1]==false){
+                x = X;
+                y = Y;
+                visited[x-1][y-1] = true;
+                ans.push_back({x,y});
+                left--;
+                move(n,m,x,y,left);
+            }
+        }
     }
-
+    if(left !=0){
+        ans.pop_back();
     }
+}
 
-   char b = '0'+1;
+int main(){
+    int n,m,x,y,t;
+    cin>>n>>m>>x>>y;
+    t = n*m;
+    memset(visited, false, sizeof(visited));
+    visited[x-1][y-1] = true;
+    cout<<x<<" "<<y<<endl;
+    int left = n*m -1;
+    move(n,m,x,y,left);
 
-   if(A==C&&B==D)
-
-   return 0;
-
-    while(!q.empty())
-
-    {
-
-        
-
-        pair<int,pair<int,int>>p=q.front();
-
-        q.pop();
-
-        int x=p.second.first,y=p.second.second;
-
-        
-
-        if(x==C-1 && y==D-1)
-
-        {
-
-        int c= E[C-1][D-1]-'0';
-
-        return p.first;
-
+    if(left==0){
+        for(int i=0; i<ans.size(); i++){
+            cout<<ans[i].first<<" "<<ans[i].second<<endl;
         }
-
-       
-
-        for(int i=x+1;i<E.size();i++)
-
-        {
-
-           
-
-           if(A-1==i && B-1 == y) //reached the same starting point
-
-           break;
-
-           
-
-            if(E[i][y]=='?') //obstacle is present
-
-            break;
-
- 
-
-            else if(E[i][y]=='0'|| E[i][y] > E[x][y]+1)
-
-            {
-
-                E[i][y] = E[x][y] + 1;
-
-                q.push({p.first+1,make_pair(i,y)});
-
-            }
-
-        }
-
-       // if(b<a)
-
-        for(int i=x-1;i>=0;i--)
-
-        {
-
-             if(A-1==i && B-1 == y) //reached the same starting point
-
-           break;
-
-             if(E[i][y]=='?') //obstacle is present
-
-            break;
-
-            else if(E[i][y]=='0'||E[i][y]>E[x][y]+1)
-
-            {
-
-                E[i][y]=E[x][y]+1;
-
-                q.push({p.first+1,make_pair(i,y)});
-
-            }
-
-        }
-
-        //if(c<d)
-
-        for(int i=y+1;i<E[0].size();i++)
-
-        {
-
-             if(A-1==x && B-1==i)
-
-            break;
-
-            if(E[x][i]=='?')
-
-            break;
-
-            else if(E[x][i]=='0'||E[x][i]>E[x][y]+1)
-
-            {
-
-                E[x][i]=E[x][y]+1;
-
-                //q.push(make_pair(p.first,i));
-
-                         q.push({p.first+1,make_pair(x,i)});
-
-            }
-
-        }
-
-        //if(c>d)
-
-        for(int i=y-1;i>=0;i--)
-
-        {
-
-            if(A-1==x && B-1==i)
-
-            break;
-
-            if(E[x][i]=='?')
-
-            break;
-
-            else if(E[x][i]=='0'||E[x][i]>E[x][y]+1)
-
-            {
-
-                E[x][i]=E[x][y]+1;
-
-           q.push({p.first+1,make_pair(x,i)});
-
-            }
-
-        }
-
-        
-
     }
-
-    return -1;
-
 }
