@@ -1,5 +1,72 @@
-////https://practice.geeksforgeeks.org/problems/word-break-part-2/0/
+//// https://practice.geeksforgeeks.org/problems/word-break-part-2/0/
+////// https://www.interviewbit.com/problems/word-break-ii/
 
+vector<string> wordBreak(string s, vector<string> &dictV) {
+    unordered_set<string> dict(dictV.begin(), dictV.end());
+    vector<vector<string> > words(s.length() + 1, vector<string>(0));
+
+    // initialize the valid values
+    words[s.length()].push_back("");
+
+    // generate solutions from the end
+    for(int i = s.length() - 1; i >= 0; i--) {
+        vector<string> values;
+        for(int j = i + 1; j <= s.length(); j++) {
+            if (dict.find(s.substr(i, j - i)) != dict.end()) {
+                for (int k = 0; k < words[j].size(); k++) {
+                    values.push_back(s.substr(i, j - i) + (words[j][k].empty() ? "" : " ") + words[j][k]);
+                }
+            }
+        }
+        words[i] = values;
+    }
+    return words[0];
+}
+///////////////////////////
+/// pending
+
+bool finds(string s, vector<string> &dict){
+    for(int i=0; i<dict.size(); ++i){
+        if(s == dict[i]) return true;
+    }
+    return false;
+}
+
+void wordBreakHelp(string s, vector<string> &dict, int start, int len, 
+                   string& result, vector<string>& ans, vector<bool>& check)
+{
+    if(start == len){
+        ans.push_back(result.substr(0,result.size()-1));
+    }
+
+    else{
+        for(int i=start;i<len;++i){
+            string temp = s.substr(start, i-start+1);
+            if(finds(temp,dict) && check[i+1]){
+                result.append(temp).append(" ");
+                int oldSize = ans.size();
+                wordBreakHelp(s,dict,i+1,len,result, ans,check);
+                if(ans.size() == oldSize) 
+                    check[i+1] = false;
+                result.resize(result.size() - temp.size() - 1);
+            } 
+        }
+    }
+}
+
+vector<string> Solution::wordBreak(string s, vector<string> &dict) {
+    
+    vector<string> ans;
+    int len = s.length();
+    if(len == 0) return ans;
+    string temp;
+    vector<bool> check(len + 1, true);
+    wordBreakHelp(s, dict, 0, len, temp, ans, check);
+    return ans;
+}
+
+
+///////////////////////////
 #include <bits/stdc++.h>
 #define endll "\n";
 using namespace std;
@@ -50,54 +117,4 @@ int main()
 }
 
 ///////////////////////
-
-// #include<bits/stdc++.h>
-// using namespace std;
-
-// int main(){
-// 	int t;
-// 	cin>>t;
-// 	while(t--){
-// 		int n;
-// 		cin>>n;
-// 		unordered_map<string,int> mp;
-// 		string s, temp_s;
-// 		for(int i=0; i<n; i++){
-// 			cin>>s;
-// 			mp[s] = 1;
-// 		}
-// 		cin>>s;
-// 		int len = s.length();
-// 		vector<vector<string>> vec;
-// 		vector<string> temp;
-// 		int dp[len+1];
-// 		memset(dp,0,sizeof(dp));
-// 		dp[0] =1;
-// 		for(int i=1; i<=len; i++){
-// 			for(int j=i-1; j>=0; j--){
-// 				temp_s = s.substr(j, i-j);
-// 				if(mp.find(temp_s) != mp.end()){
-// 					dp[i] |= dp[j];
-// 					temp.push_back(temp_s);
-// 					if(i==len){
-// 					    vec.push_back(temp);
-// 					    temp.pop_back();
-// 					}
-// 				}
-// 			}
-// 		}
-// 		for(int i=len; i>0; i--){
-// 			for(int )
-// 		}
-
-
-// 		for(int i=0; i<vec.size(); i++){
-// 		    cout<<"(";
-// 		    for(int j=0; j<vec[i].size(); j++){
-// 		        cout<<vec[i][j];
-// 		        if(j!=vec[i].size()-1) cout<<" ";
-// 		    }cout<<")";
-// 		}
-// 	}
-// }
 

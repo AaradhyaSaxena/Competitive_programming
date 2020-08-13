@@ -1,4 +1,5 @@
 //// https://practice.geeksforgeeks.org/problems/brackets-in-matrix-chain-multiplication/0
+////// pending 
 
 #include <bits/stdc++.h>
 using namespace std;

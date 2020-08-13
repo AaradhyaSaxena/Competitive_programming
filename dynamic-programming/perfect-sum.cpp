@@ -1,4 +1,4 @@
-/// https://practice.geeksforgeeks.org/problems/perfect-sum-problem/0
+//// https://practice.geeksforgeeks.org/problems/perfect-sum-problem/0
 
 #include <bits/stdc++.h>
 
