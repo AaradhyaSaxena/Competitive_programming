@@ -81,27 +81,28 @@
 
 ////////// p3 ed //
 
-#include<bits/stdc++.h>
-using namespace std;
+// #include<bits/stdc++.h>
+// using namespace std;
 
-int T,n;
-string s;
-map<int,int>mp;
+// int T,n;
+// string s;
+// map<int,int>mp;
 
-int main(){
-	cin>>T;
-	while(T--){
-		mp.clear(); 
-		cin>>n>>s;mp[0]++;
-		long long ans=0,sum=0;
-		for(int i=0;i<n;i++){
-			sum+=s[i]-'1'; 
-			ans+=mp[sum];
-			mp[sum]++;
-		}
-		cout<<ans<<endl;
-	}
-}
+// int main(){
+// 	cin>>T;
+// 	while(T--){
+// 		mp.clear(); 
+// 		cin>>n>>s;
+// 		mp[0]++;
+// 		long long ans=0,sum=0;
+// 		for(int i=0;i<n;i++){
+// 			sum+=s[i]-'1'; 
+// 			ans+=mp[sum];
+// 			mp[sum]++;
+// 		}
+// 		cout<<ans<<endl;
+// 	}
+// }
 
 ////// p4 incorrect
 
@@ -233,119 +234,50 @@ sticks.*/
 
 /////F. Controversial Rounds
 
-// #include <bits/stdc++h>
+// #include <bits/stdc++.h>
 // using namespace std;
 
-// using ll = long long;
-// using pii = pair<int, int>;
-// #define pb push_back
-// #define mp make_pair
-// #define all(x) (x).begin(),(x).end()
-// #define fi first
-// #define se second
+// #define ll long long
+// #define ar array
+// const int mxN=1e6;
 
-// const int N = (int)1e6 + 7;
-// char s[N];
-// int lst[2];
-// int a[N];
-// int nxt[N];
-// int n;
-// pii ord[N];
- 
-// int getNext(int p) {
-// 	return nxt[p] == p ? p : nxt[p] = getNext(nxt[p]);
-// }
-// void turnOn(int p) {
-// 	nxt[p] = p + 1;
-// }
- 
-// int main(){
+// int n, prv[mxN+1][2], a[mxN+1][2];
+// string s;
 
-// 	scanf("%d", &n);
-// 	scanf("%s", s);
-// 	lst[0] = lst[1] = n;
-// 	for (int i = n - 1; i >= 0; i--) {
-// 		if (s[i] != '?')
-// 			lst[(int)(s[i] - '0')] = i;
-// 		a[i] = max(lst[0], lst[1]) - i;
-// 		ord[i] = mp(a[i], i);
+// int main() {
+// 	ios::sync_with_stdio(0);
+// 	cin.tie(0);
+
+// 	cin >> n >> s;
+// 	prv[0][0] = prv[0][1] = -1;
+// 	for(int i=0; i<n; ++i) {
+// 		prv[i+1][0]=prv[i][0];
+// 		prv[i+1][1]=prv[i][1];
+// 		a[i+1][0]=a[i][0];
+// 		a[i+1][1]=a[i][1];
+// 		if(s[i]=='?')
+// 			continue;
+// 		prv[i+1][s[i]&1]=i;
+// 		++a[i+1][s[i]&1];
 // 	}
-// 	/*
-// 	for (int i = 0; i < n; i++)
-// 		eprintf("%d ", a[i]);
-// 	eprintf("\n");
-// 	*/
-// 	for (int i = 0; i < n; i++)
-// 		nxt[i] = i;
-// 	nxt[n] = n;
-// 	sort(ord, ord + n);
-// 	int l = 0;
-// 	for (int k = 1; k <= n; k++) {
-// 		while(l < n && ord[l].first < k) {
-// 			turnOn(ord[l].second);
-// 			l++;
+// 	for(int x=1; x<=n; ++x) {
+// 		int s=0, c=0;
+// 		while(s+x<=n) {
+// 			if(a[s+x][0]-a[s][0]==0) {
+// 				s+=x;
+// 				++c;
+// 				continue;
+// 			}
+// 			if(a[s+x][1]-a[s][1]==0) {
+// 				s+=x;
+// 				++c;
+// 				continue;
+// 			}
+// 			int b=prv[s+x][1]>prv[s+x][0];
+// 			s=prv[s+x][b^1]+1;
 // 		}
-// 		int ans = 0;
-// 		int p = 0;
-// 		while(p < n) {
-// 			p = getNext(p);
-// 			if (p == n) break;
-// 			ans++;
-// 			p += k;
-// 		}
-// 		printf("%d ", ans);
+// 		cout << c << " ";
 // 	}
-// 	printf("\n");
- 
-// 	return 0;
 // }
-
-///////////////////////////
-
-    // #include <bits/stdc++.h>
-    // using namespace std;
-     
-    // #define ll long long
-    // #define ar array
-     
-    // const int mxN=1e6;
-    // int n, prv[mxN+1][2], a[mxN+1][2];
-    // string s;
-     
-    // int main() {
-    // 	ios::sync_with_stdio(0);
-    // 	cin.tie(0);
-     
-    // 	cin >> n >> s;
-    // 	prv[0][0]=prv[0][1]=-1;
-    // 	for(int i=0; i<n; ++i) {
-    // 		prv[i+1][0]=prv[i][0];
-    // 		prv[i+1][1]=prv[i][1];
-    // 		a[i+1][0]=a[i][0];
-    // 		a[i+1][1]=a[i][1];
-    // 		if(s[i]=='?')
-    // 			continue;
-    // 		prv[i+1][s[i]&1]=i;
-    // 		++a[i+1][s[i]&1];
-    // 	}
-    // 	for(int x=1; x<=n; ++x) {
-    // 		int s=0, c=0;
-    // 		while(s+x<=n) {
-    // 			if(a[s+x][0]-a[s][0]==0) {
-    // 				s+=x;
-    // 				++c;
-    // 				continue;
-    // 			}
-    // 			if(a[s+x][1]-a[s][1]==0) {
-    // 				s+=x;
-    // 				++c;
-    // 				continue;
-    // 			}
-    // 			int b=prv[s+x][1]>prv[s+x][0];
-    // 			s=prv[s+x][b^1]+1;
-    // 		}
-    // 		cout << c << " ";
-    // 	}
-    // }
 
 //////////////////
