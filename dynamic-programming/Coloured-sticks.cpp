@@ -47,3 +47,22 @@ int main()
 
 /*Incorrect appoach to think it as a problem of 3 pointers, and greedy selection of
 sticks.*/
+
+/*
+First of all, it is easier to think of greed, but this problem will be related to the number of sticks.
+There are many problems with greed, and the patching method cannot be solved.
+
+Considering the DP of O(n3)O(n3), since there are three elements in total, 
+you might as well design the state directly according to the definition: Status: 𝑓[𝑖,𝑗,𝑘]
+
+Indicates the maximum value of the sum of the rectangular areas 
+obtained under the premise that red uses i, green uses j, and blue uses k.
+
+Entrance: All 0 is enough, no additional processing is required.
+
+Transfer: The three matching methods can be directly enumerated.
+
+Outlet: the maximum value of all values.
+
+If you pay attention, prevent int from exploding
+*/
