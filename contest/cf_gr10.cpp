@@ -149,100 +149,52 @@
 
 //// p4
 
-// #include<bits/stdc++.h>
+// #include <bits/stdc++.h>
 // using namespace std;
-// typedef long long ll;
 
-// bool issame(string str, int i){
-// 	if(str[i] == str[i+1] and str[i+1] == str[i+2])
-// 		return true;
-// 	return false;
+// void solve() {
+//     int n, ans = 0;
+//     cin >> n;
+//     string s;
+//     cin >> s;
+//     int cnt = 0;
+//     while(s.size() && s[0] == s.back()) {
+//         cnt++;
+//         s.pop_back();
+//     }
+//     if(s.empty()) {
+//         if(cnt <= 2) {
+//             cout << "0\n";
+//             return;
+//         }
+//         if(cnt == 3) {
+//             cout << "1\n";
+//             return;
+//         }
+//         cout << (cnt + 2) / 3 << '\n';
+//         return;
+//     }
+//     s.push_back('$');
+//     for(int i = 0; i + 1 < s.size(); i++) {
+//         cnt++;
+//         if(s[i] != s[i + 1]) {
+//             ans += cnt / 3;
+//             cnt = 0;
+//         }
+//     }
+//     cout << ans << '\n';
 // }
 
-// string flip(string str, int i){
-// 	if(str[i] == 'L')
-// 		str[i] = 'R';
-// 	else
-// 		str[i] = 'L';
-// 	return str;
+// int main() {
+//     ios_base::sync_with_stdio(false);
+//     cin.tie(0);
+
+//     int t;
+//     cin >> t;
+//     while(t--)
+//         solve();
 // }
 
-// int main(){
-// 	ll t;
-// 	cin>>t;
-// 	while(t--){
-// 		ll n, r=0, l=0;
-// 		cin>>n;
-// 		string str;
-// 		cin>>str;
-// 		str += str[0];
-// 		ll cnt = 0;
-
-// 		if(str[0] == str[1] and str[0]==str[n-1]){
-// 			str = flip(str,0);
-// 			cnt++;
-// 		}
-
-// 		for(int i=0; i<n-2; i++){
-// 			if(issame(str,i)){
-// 				str = flip(str, i+1);
-// 				cnt++;
-// 			}
-// 		}
-// 		cout<<cnt<<endl;
-// 	}
-// }
-
-/////p4b
-
-#include<bits/stdc++.h>
-using namespace std;
-typedef long long ll;
-
-bool issame(string str, int i){
-	if(str[i] == str[i+1] and str[i+1] == str[i+2])
-		return true;
-	return false;
-}
-
-bool isValid(string str, int i){
-	if((str[i-1]=='R' and str[i] =='L') or (str[i+1]=='L' and str[i]=='R') or (str[i-1]=='L' and str[i+1]=='R') or (str[i-1]=='R' and str[i+1]=='L'))
-		return true;
-	return false;
-} 
-
-string flip(string str, int i){
-	if(str[i] == 'L')
-		str[i] = 'R';
-	else
-		str[i] = 'L';
-	return str;
-}
-
-int main(){
-	ll t;
-	cin>>t;
-	while(t--){
-		ll n, r=0, l=0;
-		cin>>n;
-		string str;
-		cin>>str;
-		str += str[0];
-		ll cnt = 0;
-
-		if(str[0] == str[1] and str[0]==str[n-1]){
-			str = flip(str,0);
-			cnt++;
-		}
-
-		for(int i=1; i<n-1; i++){
-			if(!isValid(str,i)){
-				str = flip(str, i);
-				cnt++;
-			}
-		}
-		cout<<cnt<<endl;
-	}
-}
+//// p5 
 
 
