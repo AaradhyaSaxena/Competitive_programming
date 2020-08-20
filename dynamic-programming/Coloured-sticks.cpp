@@ -9,9 +9,7 @@ int a[N], b[N], c[N];
 int dp[N][N][N];
 int n, m, k;
  
-int main()
-{
-	startTime = clock();
+int main(){
  
 	scanf("%d%d%d", &n, &m, &k);
 	for (int i = 0; i < n; i++)
