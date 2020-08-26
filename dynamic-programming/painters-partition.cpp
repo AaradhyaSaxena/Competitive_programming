@@ -38,8 +38,7 @@ int findMax(int arr[], int n, int k)
   
             // i-1 th separator before position arr[p=1..j] 
             for (int p = 1; p <= j; p++)  
-                best = min(best, max(dp[i - 1][p], 
-                              sum(arr, p, j - 1)));        
+                best = min( best, max( dp[i-1][p],sum(arr,p,j-1) ) );        
   
             dp[i][j] = best; 
         } 

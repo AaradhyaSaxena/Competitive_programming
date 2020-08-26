@@ -13,8 +13,7 @@ bool isSubsetSum(int arr[], int sum, int n){
     for (int i = 0; i <= n; i++) 
         subset[i][0] = true; 
   
-    // If sum is not 0 and set is empty, 
-    // then answer is false 
+    // If sum is not 0 and set is empty, then answer is false 
     for (int i = 1; i <= sum; i++) 
         subset[0][i] = false; 
   

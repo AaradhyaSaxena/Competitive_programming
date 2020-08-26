@@ -1,5 +1,5 @@
 ///// https://practice.geeksforgeeks.org/problems/count-digit-groupings-of-a-number/0
-
+////???????????????????????????
 /// Count digit groupings 
 
 #include<bits/stdc++.h>
@@ -11,8 +11,8 @@ int countGroups(int position, int previous_sum, int length, string num){
     if (position == length) 
         return 1; 
   
-    int res = 0; 
-    int sum = 0;  
+    int res = 0;
+    int sum = 0;
   
     // Traverse all digits from current position to rest of the length of string 
     for (int i = position; i < length; i++){ 
@@ -56,8 +56,8 @@ int countGroups(int position, int previous_sum, int length, string num){
   
     // If already evaluated for a given sub problem then return the value 
     if (dp[position][previous_sum] != -1) 
-        return dp[position][previous_sum]; 
-  
+        return dp[position][previous_sum];
+
     // countGroups for current sub-group is 0 
     dp[position][previous_sum] = 0; 
   
