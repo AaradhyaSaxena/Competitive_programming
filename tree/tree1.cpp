@@ -334,52 +334,140 @@ vector<int> inorder_traversal(TreeNode* A) {
 
 /////////////////////////
 
+/////// Inorder traversal of Cartesian Tree 
+
+int maxIndex(vector<int> &A, int start, int end){
+    int idx = start, maxx = A[start], i=0;
+    for(i=start; i<=end; i++){
+        if(maxx<A[i]){
+            maxx = A[i];
+            idx = i;
+        }
+    }
+    return idx;
+}
+
+TreeNode* helper(vector<int> &A, int i, int j){
+    if(j<i) return NULL;
+    int mi = maxIndex(A,i,j);
+    TreeNode *node = new TreeNode(A[mi]);
+    node->left = helper(A,i, mi-1);
+    node->right = helper(A,mi+1, j);
+    
+    return node;
+}
 
 
+TreeNode* Solution::buildTree(vector<int> &A) {
+    return helper(A, 0, A.size()-1);
+}
 
+/////////////////////
 
+//// Sorted Array to Balanced BST
 
+TreeNode *helper(const vector<int> &A, int i, int j){
+    int idx = (j+i)/2;
+    TreeNode *node = new TreeNode(A[idx]);
+    
+    node->left = helper(A,i,idx-1);
+    node->right = helepr(A,idx+1,j);
+    
+    return node;
+}
 
+TreeNode* Solution::sortedArrayToBST(const vector<int> &A) {
+    return helper(A, 0, A.size()-1);
+}
 
+//////////////////////////
 
+////// Binary Tree From Inorder And Postorder
 
+/// Inorder: A and PostOrder: B
 
+TreeNode *solve(vector<int> &A,vector<int> &B,int start,int end,int &curr,map<int,int> &mp)
+{
+    if(start>end)
+        return NULL;
+    int num = B[curr];
+    curr--;
+    TreeNode *root  = new TreeNode(num);
+    int pos  = mp[num];
+    root->right = solve(A,B,pos+1 , end ,curr , mp);
+    root->left = solve(A,B,start , pos-1 , curr, mp);
+    return root;
+}
 
+TreeNode* Solution::buildTree(vector<int> &A, vector<int> &B)
+{
+    int curr,n = A.size();
+    curr = n-1;
+    map<int,int>mp;
+    for(int i = 0 ; i < n ; i++){
+        mp[A[i]] = i;
+    }
+    return solve(A, B, 0, n-1, curr,  mp);
+}
+/*
+Focus on the preorder traversal to begin with.
+The first element in the traversal will definitely be the root.
+Based on this information, can you identify the elements in the left subtree and right subtree ? 
+( Hint : Focus on inorder traversal and root information )
 
+Once you do that, your problem has now been reduced to a smaller set. 
+Now you have the inorder and preorder traversal for the left and right subtree and you need to figure them out. 
+*/
 
+////////////////
 
+//// Least Common Ancestor
 
+TreeNode *LCA(TreeNode *root, int val1, int val2) {
+    if (!root) return NULL;
+    if (root->val == val1 || root->val == val2) return root;
+    TreeNode *L = LCA(root->left, val1, val2);
+    TreeNode *R = LCA(root->right, val1, val2);
+    if (L && R) return root; // If val1, val2 are on both sides 
+    return L ? L : R; // either one of val1, val2 is on one side OR val1, val2 is not in L&R subtrees
+}
 
+bool find(TreeNode *root, int val1) {
+    if (!root) return false;
+    if (root->val == val1) return true;
+    return (find(root->left, val1) || find(root->right, val1));
+}
 
+int Solution::lca(TreeNode *root, int val1, int val2) {
+    if (!find(root, val1) || !find(root, val2)) return -1;
+    TreeNode *ans = LCA(root, val1, val2);
+    if (!ans) return -1;
+    return ans->val;
+}
 
+//////////////////
 
+//// Flatten Binary Tree to Linked List
 
+TreeNode* Solution::flatten(TreeNode* A) {
+    if(!A) return NULL;
+    TreeNode *node = A;
+    while(node){
+    if(node->left){
+        TreeNode *rightmost = node->left;
+        while(rightmost->right){
+            rightmost = rightmost->right;
+        }
+        rightmost->right = node->right;
+        node->right = node->left;
+        node->left = NULL;
+    }
+    node = node->right;
+    }
+    return A;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/////////////////
 
 
 
