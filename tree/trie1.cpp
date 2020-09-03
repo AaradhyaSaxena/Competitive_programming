@@ -2,71 +2,75 @@
 
 #include<bits/stdc++.h>
 using namespace std;
-#define f first
-#define s second
 
-struct trie{
-    int w;
-    trie *child[26];
+struct trieNode 
+{
+	trieNode *children[26];
+	bool endofword;
+	int weight;
 };
 
-trie* getnode(){
-    trie* node = new trie();
-    node->w = 0;
-    for(int i=0; i<26; i++){
-        node->child[i] = NULL;
-    }
-    return node;
+trieNode *newNode() {
+	trieNode *node = new trieNode();
+	for (int i = 0; i < 26; ++i) {
+		node->children[i] = NULL;
+	}
+	node->endofword = false;
+	node->weight = -1;
+	return node;
 }
 
-void insert(trie *A, pair<string,int> pr){
-    string s = pr.f; int we = pr.s;
-    trie *curr = A;
-    for(int i=0; i<s.length(); i++){
-        int idx = int(s[i] - 'a');
-        if(!curr->child[idx]){
-            curr->child[idx] = getnode();
-        }
-        curr->w = max(curr->w, we);
-        curr = curr->child[idx];
-    }
+void insert(trieNode *root, string s,int weight) {
+	trieNode *node = new trieNode();
+	node = root;
+	for (int i = 0; i < s.length(); ++i) {
+		int index = s[i] - 'a';
+		if (!node->children[index])
+			node->children[index] = newNode();
+			node = node->children[index];
+
+		if (node->weight < weight)
+			node->weight = weight;
+	}
+	node->endofword = true;
 }
 
-int find(trie *node, string str){
-    int ans =0;
-    trie *curr = node;
-    for(int i=0; i<str.length(); i++){
-        int idx = int(str[i]-'a');
-        if(!curr->child[idx]){
-            return -1;
-        }
-        curr = curr->child[idx];
-        ans = node->w;
-    }
-    return ans;
+void search(trieNode *root, string s) {
+	trieNode *node = new trieNode();
+	node = root;
+	for (int i = 0; i < s.length(); ++i) {
+		int index = s[i] - 'a';
+		if (!node->children[index]) {
+			cout << -1 << endl;
+			return;
+		}
+		node = node->children[index];
+	}
+	cout << node->weight << endl;
+	return ;
 }
 
-int main(){
-    int n,q;
-    cin>>n>>q;
-    string s;
-    int x;
-    trie *node = getnode();
-    for(int i=0; i<n; i++){
-        cin>>s; cin>>x;
-        insert(node,{s,x});
-    }
-    vector<string> qr;
-    for(int i=0; i<q; i++){
-        cin>>s; 
-        qr.push_back(s);
-    }
-    
-    for(int i=0; i<q; i++){
-        int ans = find(node, qr[i]);
-        cout<<ans<<endl;
-    }
-    return 0;
+int main()
+{
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
+	trieNode *root = newNode();
+	int n, q;
+	cin >> n >> q;
+	for (int i = 0; i < n; i++) 
+	{
+		string s;
+		int weight;
+		cin >> s >> weight;
+		insert(root, s, weight);
+	}
+	while(q--) 
+	{
+		string s;
+		cin >> s;
+		search(root, s);
+	}
+	return 0;
 }
 
 //////////////////////////////
@@ -252,6 +256,108 @@ vector<string> Solution::prefix(vector<string> &A) {
 }
 
 /////////////////////////////////
+
+/*
+Given two integer array A and B, you have to pick one element from each array such that their xor is maximum.
+Return this maximum xor value.
+
+Solution::
+You should use a Trie data structure here:
+
+    Create a binary trie using all the elements of the second array. Start with the Most Significant Bit and
+     head towards the Least Significant Bit.
+    Each non-leaf node of the trie has 1-2 children. Going down the left child is like getting a bit equal to zero, 
+     right means getting a one.
+    Initialise result to zero, maximum to -infinity.
+    For each element of the first array
+        Set BIT = MSB of this element. Go to the root of the trie.
+        If there is only one child, follow it.
+        Else
+            If the element_bit is 1, follow the left child. This will give the maximum xor.
+            Else, follow the right child.
+        When following a child pointer, set the bit at BIT of result to (child_pointer ^ element_BIT_bit).
+        Decrement BIT and go back to point a, as long as BIT>=0.
+    If the result is greater than maximum, set maximum to result.
+    Output maximum.
+
+The time complexity is O(max(A.size(),B.size())).
+*/
+
+
+class trienode{
+    public:
+    trienode* left;
+    trienode* right;
+    trienode(){
+        left=NULL;
+        right=NULL;
+    }
+};
+class Trie{
+    public:
+    trienode* root;
+    int mxor;
+    Trie(){
+        root = new trienode();
+        mxor=0;
+    }
+    void insert(int n){
+        trienode* temp=root;
+        for(int i=31;i>=0;i--){
+            int bit = (n>>i) & 1;
+            if(bit==0){
+                if((temp->left) != NULL) temp=temp->left;
+                else{
+                    trienode* nw = new trienode();
+                    temp->left=nw;
+                    temp=nw;
+                }
+            }
+            else{
+                if((temp->right) != NULL) temp=temp->right;
+                else{
+                    trienode* nw = new trienode();
+                    temp->right = nw;
+                    temp=nw;
+                }
+            }
+        }
+    }
+    void findmxor(int n){
+        int ans=0;
+        trienode* temp=root;
+        for(int i=31;i>=0;i--){
+            int bit = (n>>i)&1;
+            if(bit==0){
+                if((temp->right) != NULL){
+                    ans += (1<<i);
+                    temp=temp->right;
+                }
+                else  temp=temp->left;
+            }
+            else{
+                if((temp->left) !=NULL){
+                    ans+=(1<<i);
+                    temp=temp->left;
+                }
+                else  temp=temp->right;
+            }
+        }
+        if (ans>mxor) mxor=ans;
+    }
+};
+int Solution::solve(vector<int> &A, vector<int> &B) {
+    Trie t;
+    for(int i=0;i<A.size();i++)t.insert(A[i]);
+    for(int i=0;i<B.size();i++)t.findmxor(B[i]);
+    return t.mxor;
+}
+
+/////////////////////
+
+
+
+
 
 
 
