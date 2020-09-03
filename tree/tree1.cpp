@@ -303,7 +303,7 @@ vector<int> Tree_Traversal(TreeNode* A) {
 
 /////////////////////////
 
-vector<int> inorder_traversal(TreeNode* A) {
+vector<int> level_order_traversal(TreeNode* A) {
     vector<vector<int>> ans;
     vector<int> vec;
     queue<TreeNode *> qt;
