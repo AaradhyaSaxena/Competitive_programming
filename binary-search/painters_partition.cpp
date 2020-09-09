@@ -1,4 +1,4 @@
-https://www.interviewbit.com/problems/painters-partition-problem/
+//// https://www.interviewbit.com/problems/painters-partition-problem/
 
 bool isPossible(int max, int A, vector<int> &C){
     int sum =0, cnt =1;
@@ -25,15 +25,15 @@ bool isPossible(int max, int A, vector<int> &C){
 }
 
 int Solution::paint(int A, int B, vector<int> &C) {
-    long long int start =0, end =0;
+    long long int start = 0, end = 0;
     long long int ans = INT_MAX;
-    // for(int i = 0; i < C.size(); ++i) {
-    //     end += C[i];
-    // }
-    // ans *= INT_MAX;
-    end = accumulate(C.begin(), C.end(),0);
+
+    // end = accumulate(C.begin(), C.end(), 0);
+    for(int i=0; i<C.size(); i++){
+        end += C[i];
+    }
     while(start<=end){
-        long long int mid = (start+end)/2;
+        long long int mid = start + (end- start)/2;
         if(isPossible(mid, A, C)){
             ans = min(mid,ans);
             end = mid-1;
@@ -44,3 +44,5 @@ int Solution::paint(int A, int B, vector<int> &C) {
     }
     return (ans*B)%10000003;
 }
+
+/////

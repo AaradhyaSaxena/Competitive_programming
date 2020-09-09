@@ -1,4 +1,4 @@
-https://www.interviewbit.com/problems/square-root-of-integer/
+//// https://www.interviewbit.com/problems/square-root-of-integer/
 
 // int Solution::sqrt(int A) {
 //     int i=1, j=A, mid; 
