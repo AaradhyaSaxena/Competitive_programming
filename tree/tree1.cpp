@@ -83,6 +83,26 @@ int Solution::kthsmallest(TreeNode* A, int B) {
     return helper(A,B,level);
 }
 
+/*
+start from the leftmost, and take the count
+pre-order should work as well!
+*/
+
+void traverse(priority_queue<int>&pq,int k, TreeNode* A)
+{
+    if(!A) return ;
+    
+    pq.push(A->val);
+    if(pq.size()>k) pq.pop();
+    traverse(pq,k,A->left);
+    traverse(pq,k,A->right);
+}
+int Solution::kthsmallest(TreeNode* A, int B) {
+    priority_queue<int>pq;
+    traverse(pq,B,A);
+    return pq.top();
+}
+
 /////////////////////////////
 
 /// 2-Sum Binary Tree
@@ -491,6 +511,7 @@ If you are allowed extra memory the cheap way to deal with trees is to store it 
 
 Traversal -- Mostly about stacking all left children and when encounetered NULL, move to the right.
 
+tree-traversal:: Based on decisions of pushing what nodes into queue/stacks. 
 
 */
 
