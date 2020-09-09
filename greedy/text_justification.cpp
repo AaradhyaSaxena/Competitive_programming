@@ -1,4 +1,4 @@
-https://leetcode.com/problems/text-justification/submissions/
+/// https://leetcode.com/problems/text-justification/submissions/
 
 vector<string> fullJustify(vector<string> &words, int L) {
     vector<string> res;
