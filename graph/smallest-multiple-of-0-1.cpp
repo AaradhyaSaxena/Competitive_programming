@@ -55,6 +55,9 @@ string Solution::multiple(int A) {
 
 
 //////////////////////////////////
+//////////////////////////////////
+
+
 string Solution::multiple(int N) {
     if(N==1) return "1";
     vector<int> p(N,-1); //parent state
