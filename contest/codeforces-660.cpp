@@ -275,7 +275,7 @@ int main(){
 // #include<bits/stdc++.h> 
 // #define endl '\n'
 // using namespace std;
-// typedef long long int ll;
+// typedef long long int int;
      
 // int main(){
 //     ios_base::sync_with_stdio(0);
