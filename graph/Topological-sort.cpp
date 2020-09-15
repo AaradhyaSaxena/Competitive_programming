@@ -1,7 +1,162 @@
+//////// Topological Sort
+
+/// https://www.hackerearth.com/practice/algorithms/graphs/topological-sort/tutorial/
+
+#include<bits/stdc++.h>
+using namespace std;
+
+bool visited[21];
+vector<int> vec;
+
+//// this gives you a topo sort
+void topoSort(int s, vector<int> adj[]){
+    visited[s] = true;
+    for(int i=0; i<adj[s].size(); i++){
+        if(visited[adj[s][i]]==false){
+            topoSort(adj[s][i], adj);
+        }
+    }
+    vec.push_back(s);
+}
+
+int main(){
+    int n,m,x,y;
+    cin>>n>>m;
+    vector<int> adj[n+1];
+    for(int i=0; i<m; i++){
+        cin>>x>>y;
+        adj[x].push_back(y);
+    }
+    for(int i=1; i<=n; i++){
+        visited[i] = false;
+    }
+    vec.clear();
+    topoSort(1,adj);
+    for(int i=0; i<vec.size(); i++){
+        cout<<vec[i]<<" ";
+    }cout<<endl;
+}
+
+
+///////////////////
+/// BFS
+
+#include<bits/stdc++.h>
+using namespace std;
+
+bool visited[21];
+vector<int> vec;
+
+void topoSort(int n, vector<int> adj[]){
+    int degree[n+1]; bool visited[n+1];
+    for(int i=1; i<=n; i++){
+        degree[i] = visited[i] = 0;
+    }
+    for(int i=1; i<=n; i++){
+        for(int j=0; j< adj[i].size(); j++){
+            degree[adj[i][j]] += 1;
+        }
+    }
+    queue<int> qt;
+    for(int i=1; i<=n; i++){
+        if(degree[i]==0){
+            qt.push(i);
+            visited[i] = true;
+        }
+    }
+    while(!qt.empty()){
+        int p = qt.front();
+        qt.pop();
+        vec.push_back(p);
+        for(auto i=0; i<adj[p].size(); i++){
+            if(visited[adj[p][i]]==false){
+                degree[adj[p][i]] = degree[adj[p][i]] -1;
+                if(degree[adj[p][i]]==0){
+                    qt.push(adj[p][i]);
+                }
+            }
+        }   
+    }
+}
+
+int main(){
+    int n,m,x,y;
+    cin>>n>>m;
+    vector<int> adj[n+1];
+    for(int i=0; i<m; i++){
+        cin>>x>>y;
+        adj[x].push_back(y);
+    }
+    for(int i=1; i<=n; i++){
+        visited[i] = false;
+    }
+    vec.clear();
+    topoSort(n,adj);
+    for(int i=0; i<vec.size(); i++){
+        cout<<vec[i]<<" ";
+    }cout<<endl;
+}
+
+//////////////////////////
+
+//// dfs >> 
+/// gives you lexicographically smallest topo;
+
+#include<bits/stdc++.h>
+using namespace std;
+stack<int> stk;
+vector<int> adj[25];
+bool vis[25];
+
+void dfs(int s){
+    vis[s] = true;
+    for(int i=0; i<adj[s].size(); i++)
+    {
+        int to = adj[s][i];
+        if(vis[to] == false){
+
+            dfs(to);
+        }
+    }
+    stk.push(s);
+}
+
+void init(){
+    for(int i=0; i<25; i++) 
+        vis[i] = false;
+}
+
+int main()
+{
+    int n,m;
+    int x,y;
+    cin>>n>>m;
+    init();
+    for(int i=0;i<m;i++){
+        cin>>x>>y;
+        adj[x].push_back(y);
+    }
+
+    for(int i=1; i<=n; i++){
+        sort(adj[i].rbegin(), adj[i].rend());
+    }
+    
+    for(int i=n; i>=1; i--){
+        if(vis[i] == false) 
+            dfs(i);
+    }
+    
+    while(!stk.empty()){
+        int z= stk.top();
+        cout<<z<<" ";
+        stk.pop();
+    }
+    return 0;
+}
+
+/////////////////////////
 ////// https://practice.geeksforgeeks.org/problems/topological-sort/1
 //// https://practice.geeksforgeeks.org/editorial.php?pid=700255
-
-/// Topological Sort
 
 #include<bits/stdc++.h>
 using namespace std;
