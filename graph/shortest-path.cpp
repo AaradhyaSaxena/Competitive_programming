@@ -9,11 +9,11 @@ vector <int> floyd_warshalls(vector<vector<int>> g, int src, int V) {
     for(int k=0; k<V; k++){
         for(int i=0; i<V; i++){
             for(int j=0; j<V; j++){
-                if( i != j and g[i][j]==0) g[i][j] = 1000000; // wt zero is treated as no edge
+                // if( i != j and g[i][j]==0) g[i][j] = 1000000; // wt zero is treated as no edge
                 if(g[i][j] > g[i][k]+ g[k][j]){
                     g[i][j] = g[i][k] + g[k][j];
                 }
-                if(i==j) g[i][j] = 0;
+                // if(i==j) g[i][j] = 0;
             }
         }
     }
