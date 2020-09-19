@@ -44,8 +44,8 @@ int main() {
     for(cc=1;cc<=N;cc++)
     {
     graph[cc].clear();graphT[cc].clear();
-visited[ cc] = false;
-conne[ cc ]=in[ cc ]=0;}
+    visited[ cc] = false;
+    conne[ cc ]=in[ cc ]=0;}
     for ( i = 1; i <= N; ++i ) {
         visited[ i ] = false;
         graph[ i ].clear();

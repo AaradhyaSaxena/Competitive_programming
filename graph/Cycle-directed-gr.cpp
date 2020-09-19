@@ -2,7 +2,7 @@
 
 /// Cycle in directed graph
 
-int check_cycle(int s,int n,vector<int> adj[],vector<bool> &visited){
+int check_cycle(int s, int n, vector<int> adj[], vector<bool> &visited){
     visited[s] = true;
     for(auto to : adj[s]){
         if(visited[to] == true) return 1;

@@ -7,20 +7,20 @@
 using namespace std;
 
 void dfs(vector<vector<int>> c,int s,vector<int> &vis){
-    vis[s]=1;
+    vis[s] = 1;
     
-    for(int i=0;i<c.size();i++)
+    for(int i=0; i<c.size(); i++)
     {
-        if(vis[i]==0&&c[s][i]>0)
+        if(vis[i] == 0 && c[s][i] > 0)
         {
-            dfs(c,i,vis);
+            dfs(c, i, vis);
         }
     }
 }
 
 bool bfs(vector<vector<int>> c,int s,int t,vector<int> &vis,vector<int> &par){
     
-    vis[s]=1;
+    vis[s] = 1;
     queue<int> q;
     q.push(s);
     
@@ -98,7 +98,11 @@ int main()
     }
     return 0;
 }
+
 /////////////
 /////////
+
+// Here we just want to know on removing which vertex, can we separate the source and sink
+// We do max flow recurssion, the we check which edges(initially having +ve conductance) are now disconnected.  
 
 ////////////

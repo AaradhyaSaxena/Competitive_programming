@@ -57,7 +57,6 @@ int main() {
 	    	for(v = t; v != s; v = parent[v]){
 	    		u = parent[v];
 	    		flow_path = min(flow_path, adj[u][v]);
-
 	    	}
 
 	    	for( v=t; v!= s; v = parent[v]){
