@@ -14,8 +14,10 @@ int diff(string A, string B){
 int Solution::solve(string A, string B, vector<string> &C) {
     C.push_back(B);
     unordered_map<string,int> mp;
+
     int n = C.size();
     vector<bool> visit(n,false);
+    
     queue<string> qt;
     qt.push(A);
     mp[A] = 0;

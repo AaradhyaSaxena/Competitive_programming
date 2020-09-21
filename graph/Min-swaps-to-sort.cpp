@@ -42,7 +42,7 @@ int minSwaps(int arr[], int N){
 int minSwaps(int arr[], int N){
     pair<int,int> temp[N];
  
-    for(int i=0;i<N;i++){
+    for(int i=0; i<N; i++){
         temp[i].first=arr[i];
         temp[i].second=i;
     }
