@@ -6,14 +6,14 @@
 using namespace std;
   
 // Function to find the subgroups 
-int countGroups(int position, int previous_sum, int length, string num){ 
+int countGroups(int position, int previous_sum, int length, string num){
     
     if (position == length) 
         return 1; 
-  
+
     int res = 0;
     int sum = 0;
-  
+
     // Traverse all digits from current position to rest of the length of string 
     for (int i = position; i < length; i++){ 
         
@@ -22,8 +22,8 @@ int countGroups(int position, int previous_sum, int length, string num){
         if (sum >= previous_sum) 
             res += countGroups(i + 1, sum, length, num); 
     }
-    return res; 
-} 
+    return res;
+}
 
 int main(){
     int t;

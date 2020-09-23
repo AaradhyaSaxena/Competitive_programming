@@ -16,7 +16,7 @@ int waysToIncreaseLCSBy1(string str1, string str2){
 
     vector<int> position[M];
     for (int i = 1; i <= n; i++)
-        position[toInt(str2[i-1])].push_back(i);
+        position[str2[i-1] - 'a'].push_back(i);
 
     int lcsl[m + 2][n + 2];
     int lcsr[m + 2][n + 2];
@@ -83,3 +83,16 @@ int main() {
 	}
 	return 0;
 }
+
+
+/*
+
+The idea is try all 26 possible characters at each position of first string, 
+if length of str1 is m then a new character can be inserted in (m + 1) positions, 
+now suppose at any time character c is inserted at ith position in str1 then 
+we will match it with all positions having character c in str2. Suppose one such position is j, 
+then for total LCS length to be one more than previous, below condition should satisfy, 
+
+LCS(str1[1, m], str2[1, n]) = LCS(str1[1, i],  str2[1, j-1]) + LCS(str1[i+1, m], str2[j+1, n])
+
+*/

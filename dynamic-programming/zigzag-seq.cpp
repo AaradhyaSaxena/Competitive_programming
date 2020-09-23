@@ -22,11 +22,11 @@ int zzis(int arr[], int n)
         { 
             if (arr[j] < arr[i] && dp[i][0] < dp[j][1] + 1) 
                 dp[i][0] = dp[j][1] + 1; 
-  
+    
             if( arr[j] > arr[i] && dp[i][1] < dp[j][0] + 1) 
                 dp[i][1] = dp[j][0] + 1; 
         } 
-  
+    
         if (res < max(dp[i][0], dp[i][1])) 
             res = max(dp[i][0], dp[i][1]); 
     } 

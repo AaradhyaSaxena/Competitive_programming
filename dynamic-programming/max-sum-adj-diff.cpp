@@ -1,5 +1,5 @@
 //////// https://practice.geeksforgeeks.org/problems/modify-array-to-maximize-sum-of-adjacent-differences/0
-/// Assembly-line
+/// Maximize-sum-of-adjacent-differences
 
 
 #include <bits/stdc++.h>

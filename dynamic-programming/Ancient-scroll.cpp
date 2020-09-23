@@ -138,3 +138,41 @@ Then add 𝑠 to some position in the list (𝑠 will be in the list after it wi
 Then you can use the hash to make the comparisons for two pointers in 𝑂(𝑙𝑜𝑔𝐿). 
 This sol works in 𝑂(𝐿⋅𝑙𝑜𝑔𝐿) and fits into TL.
 */
+
+//// incomplete
+// int cnt;
+
+// int helper(vector<string> vec, int n){
+//     for(int i=0; i<n; i++){
+//         string s1 = vec[i];
+//         for(int j=0; j<s1.length(); j++){
+//             string s2 = s1;
+//             s2 = s2.erase(j,1);
+//             vec[i] = s2;
+//             if(check_cond(vec)){
+//                 cnt += 1;
+//             }
+//         }
+//     }
+// }
+
+// int main(){
+//     int n;
+//     cin>>n;
+//     string temp;
+//     vector<string> vec;
+//     for(int i=0; i<n; i++){
+//         cin>>temp;
+//         vec.push_back(temp);
+//     }
+//     cnt = 0;
+//     helper(vec,i);
+//     cout<<cnt<<endl;
+// }
+
+
+
+
+
+
+

@@ -16,7 +16,7 @@ string helper(string str){
   
     int i, index = 0; 
     for (i=1; i<=n; i++) 
-    { 
+    {
         for (int j=i+1; j<=n; j++) 
         { 
             // (j-i) > LCSRe[i-1][j-1] to remove overlapping 
