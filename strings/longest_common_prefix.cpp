@@ -1,4 +1,4 @@
-https://www.interviewbit.com/problems/longest-common-prefix/
+// //// https://www.interviewbit.com/problems/longest-common-prefix/
 
 // string Solution::longestCommonPrefix(vector<string> &A) {
 //     auto num = A.size();

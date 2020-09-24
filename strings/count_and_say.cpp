@@ -1,4 +1,4 @@
-https://www.interviewbit.com/problems/count-and-say/
+///// https://www.interviewbit.com/problems/count-and-say/
 
 string Solution::countAndSay(int n) {
         if (n == 0) return "";  
