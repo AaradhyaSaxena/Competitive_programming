@@ -84,8 +84,7 @@ int Solution::kthsmallest(TreeNode* A, int B) {
 }
 
 /*
-start from the leftmost, and take the count
-pre-order should work as well!
+start from the leftmost, and take the count.
 */
 
 void traverse(priority_queue<int>&pq,int k, TreeNode* A)
@@ -97,6 +96,7 @@ void traverse(priority_queue<int>&pq,int k, TreeNode* A)
     traverse(pq,k,A->left);
     traverse(pq,k,A->right);
 }
+
 int Solution::kthsmallest(TreeNode* A, int B) {
     priority_queue<int>pq;
     traverse(pq,B,A);
@@ -133,7 +133,7 @@ int Solution::t2Sum(TreeNode* A, int B) {
     return 0;
 }
 
-///
+///////////
 
 bool Twosum( TreeNode* A,int B,unordered_map<int,int> &ump ){
     if(A==NULL) return false;
