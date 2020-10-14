@@ -225,3 +225,163 @@ int main(){
 }
 
 
+////////////////// p4
+
+#include<bits/stdc++.h>
+using namespace std;
+#define endl '\n'
+typedef long long int ll;
+
+int n,m, l;
+int timer;
+vector<int> tin, tout;
+vector<vector<int>> up;
+vector<int> parent;
+
+void dfs(int v, int p, vector<vector<int>> &adj)
+{
+    tin[v] = ++timer;
+    up[v][0] = p;
+    for (int i = 1; i <= l; ++i){
+    	up[v][i] = up[up[v][i-1]][i-1];
+    }
+    for(int to : adj[v]) {
+    	if(to != p){
+    		parent[to] = v;
+    		dfs(to, v, adj);
+        }
+    }
+    tout[v] = ++timer;
+}
+
+bool is_ancestor(int u, int v){
+    return tin[u] <= tin[v] && tout[u] >= tout[v];
+}
+
+int flow_bt(int x, int y, vector<vector<int>> adj){
+	int ans = INT_MAX;
+
+	while(parent[x] != y){
+		ans = min(ans,adj[x][parent[x]]);
+		x = parent[x];
+	}
+	ans = min(ans,adj[x][parent[x]]);
+	return ans;
+}
+
+int lca(int u, int v){
+
+    if (is_ancestor(u, v))
+        return u;
+    if (is_ancestor(v, u))
+        return v;
+    for (int i = l; i >= 0; --i) {
+        if (!is_ancestor(up[u][i], v))
+            u = up[u][i];
+    }
+    return up[u][0];
+}
+
+void preprocess(int root, vector<vector<int>> adj) {
+    tin.resize(n+1);
+    tout.resize(n+1);
+    timer = 0;
+    l = ceil(log2(n+1));
+    up.assign(n+1, vector<int>(l+1));
+    dfs(root, root, adj);
+}
+
+int main(){
+	cin>>n>>m;
+	vector<vector<int>> adj(n+2, vector<int> (n+2, 0));
+	for(int i=0; i<m; i++){
+		int x,y,z;
+		cin>>x>>y>>z;
+		adj[x][y] = z;
+		adj[y][x] = z;
+	}
+
+	parent.resize(n+2);
+	for(int i=0; i<n+3; i++) parent[i] = 1;
+	preprocess(1,adj);
+
+	int q;
+	cin>>q;
+	for(int i=0; i<q; i++){
+		int x,y;
+		cin>>x>>y;
+		int lc = lca(x,y);
+		cout<<min(flow_bt(x,lc,adj),flow_bt(y,lc,adj))<<endl;		
+	}
+}
+
+////////////////
+//////
+
+#include<bits/stdc++.h>
+using namespace std;
+#define endl '\n'
+typedef long long int ll;
+
+int dx[4] = {-1,-1,1,1};
+int dy[4] = {-1,1,-1,1};
+
+int ans = INT_MAX;
+int n,m;
+
+void dfs(pair<int,int> start,pair<int,int> end,vector<string> &vec,vector<vector<int>> vis,int wall,int tim){
+	vis[start.first][start.second] = 1;
+	cout<<"lol";
+
+	if(vec[start.first][start.second] == '#'){
+		tim += wall;
+		wall++;
+	}
+	tim++;
+
+	if(start==end){
+		cout<<tim<<endl;
+		ans = min(tim,ans);
+		return;
+	}
+
+	for(int i=0; i<4; i++){
+		int X = start.first + dx[i];
+		int Y = start.second + dy[i];
+		if(vis[X][Y]==0 and (X>=0 and X<n and Y>=0 and Y<m)){
+			dfs(make_pair(X,Y),end,vec,vis,wall,tim);
+		}
+	}
+}
+
+
+int main(){
+	cin>>n>>m;
+	vector<string> vec(n+1);
+	pair<int,int> start, end;
+	for(int i=0; i<n; i++){
+		string s;
+		cin>>s;
+		vec[i] = s;
+	}
+	for(int i=0; i<n; i++){
+		for(int j=0; j<m; j++){
+			if(vec[i][j]=='S'){
+				start = make_pair(i,j)
+			}
+			if(vec[i][j]=='G'){
+				start = make_pair(i,j)
+			}
+		}
+	}
+	ans = INT_MAX;
+	vector<vector<int>> vis(n+1, vector<int> (m+1,0));
+	int tim = 0;
+	cout<<"lol";
+	dfs(start,end,vec,vis,0,tim);
+
+	cout<<ans<<endl;
+}
+
+//////////////
+////////////////
