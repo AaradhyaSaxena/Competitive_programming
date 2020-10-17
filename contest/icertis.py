@@ -14,9 +14,6 @@ import gensim
 train = pd.read_csv('dataset/train.csv')
 test = pd.read_csv('dataset/test.csv')
 
-
-train
-
 X = train.expense_description
 y = train.Category
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state = 42, stratify=y)
@@ -37,8 +34,6 @@ nb.fit(X_train, y_train)
 
 my_categories = ['Daily Field Allowance', 'Travelling Expenses', 'Boarding', 'Lodging', 'Staff Welfare Expenses', 'Courier', 'Meal Allowances', 'Sales Promotion Expenses']
 
-
-%%time
 from sklearn.metrics import classification_report
 y_pred = nb.predict(X_test)
 
@@ -76,6 +71,49 @@ print('accuracy %s' % accuracy_score(y_pred, y_test))
 print(classification_report(y_test, y_pred,target_names=my_categories))
 
 ##############################
+
+# Importing the libraries 
+import numpy as np 
+import matplotlib.pyplot as plt 
+import pandas as pd 
+   
+# Importing the dataset 
+dataset = pd.read_csv('Churn_Modelling.csv') 
+X = dataset.iloc[:, 3:13].values 
+y = dataset.iloc[:, 13].values 
+   
+# Encoding categorical data 
+from sklearn.preprocessing import LabelEncoder, OneHotEncoder 
+
+labelencoder_X_1 = LabelEncoder()   
+X[:, 1] = labelencoder_X_1.fit_transform(X[:, 1])
+
+labelencoder_X_2 = LabelEncoder()
+X[:, 2] = labelencoder_X_2.fit_transform(X[:, 2]) 
+
+onehotencoder = OneHotEncoder(categorical_features = [1]) 
+  
+X = onehotencoder.fit_transform(X).toarray() 
+X = X[:, 1:] 
+   
+# Splitting the dataset into the Training set and Test set 
+from sklearn.model_selection import train_test_split 
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 0) 
+  
+# Fitting XGBoost to the training data 
+import xgboost as xgb 
+my_model = xgb.XGBClassifier() 
+my_model.fit(X_train, y_train) 
+   
+# Predicting the Test set results 
+y_pred = my_model.predict(X_test) 
+   
+# Making the Confusion Matrix 
+from sklearn.metrics import confusion_matrix 
+cm = confusion_matrix(y_test, y_pred) 
+
+############################
+
 ################################
 ############################
 ##############################
@@ -117,18 +155,12 @@ def get_vectors(model, corpus_size, vectors_size, vectors_type):
         vectors[i] = model.docvecs[prefix]
     return vectors
 
-In [56]:
-
 train_vectors_dbow = get_vectors(model_dbow, len(X_train), 300, 'Train')
 test_vectors_dbow = get_vectors(model_dbow, len(X_test), 300, 'Test')
 
-In [57]:
-
-%%time
 logreg = LogisticRegression(n_jobs=-1, C=1e5)
 logreg.fit(train_vectors_dbow, y_train)
 
-%%time
 logreg = logreg.fit(train_vectors_dbow, y_train)
 y_pred = logreg.predict(test_vectors_dbow)
 
@@ -152,47 +184,4 @@ model_w2v = gensim.models.Word2Vec(
 model_w2v.train(tokenized_expense, total_examples= len(train['expense_description']), epochs = 20)
 
 #############
-
-# Importing the libraries 
-import numpy as np 
-import matplotlib.pyplot as plt 
-import pandas as pd 
-   
-# Importing the dataset 
-dataset = pd.read_csv('Churn_Modelling.csv') 
-X = dataset.iloc[:, 3:13].values 
-y = dataset.iloc[:, 13].values 
-   
-# Encoding categorical data 
-from sklearn.preprocessing import LabelEncoder, OneHotEncoder 
-labelencoder_X_1 = LabelEncoder() 
-  
-X[:, 1] = labelencoder_X_1.fit_transform(X[:, 1]) 
-labelencoder_X_2 = LabelEncoder() 
-  
-X[:, 2] = labelencoder_X_2.fit_transform(X[:, 2]) 
-onehotencoder = OneHotEncoder(categorical_features = [1]) 
-  
-X = onehotencoder.fit_transform(X).toarray() 
-X = X[:, 1:] 
-   
-# Splitting the dataset into the Training set and Test set 
-from sklearn.model_selection import train_test_split 
-X_train, X_test, y_train, y_test = train_test_split( 
-        X, y, test_size = 0.2, random_state = 0) 
-  
-# Fitting XGBoost to the training data 
-import xgboost as xgb 
-my_model = xgb.XGBClassifier() 
-my_model.fit(X_train, y_train) 
-   
-# Predicting the Test set results 
-y_pred = my_model.predict(X_test) 
-   
-# Making the Confusion Matrix 
-from sklearn.metrics import confusion_matrix 
-cm = confusion_matrix(y_test, y_pred) 
-
-######
-
 
