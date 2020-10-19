@@ -49,8 +49,7 @@ string findOrder(string dict[], int N, int K) {
     string res;
     while(st.empty() == false)
     {
-        res += st.top() + 'a';;
-        
+        res += st.top() + 'a';
         st.pop();
     }
     if(res.length()>K){
