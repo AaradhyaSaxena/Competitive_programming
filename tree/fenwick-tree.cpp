@@ -65,7 +65,63 @@ int main()
 //////////////////
 //////////
 
+/*
+Sorted container
 
+At everytime we have to calculate number of elements greater than
+and smaller than given element. (logn)
+*/
 
+    #include <bits/stdc++.h>
+    using namespace std;
+    typedef long long int ll;
+    #define MAX 100005
+    int BIT[MAX];
+    int n;
 
+    void initialize(){
+        for(int i=0; i<MAX; i++){
+            BIT[i] = 0;
+        }
+    }
+     
+    void update(int i, int val){
+        while(i<MAX){
+            BIT[i] += val;
+            i += i&(-i);
+        }
+    }
+     
+    int sum(int i){
+        int res = 0;
+        while(i>0){
+            res += BIT[i];
+            i -= i&(-i);
+        }
+        return res;
+    }
+     
+     
+    int main() {
+        n=0;
+        cin>>n;
+        vector<int> vec;
+        initialize();
+        for(int i=0; i<n; i++){
+            int x; cin>>x;
+            vec.push_back(x);
+        }
+        int res = 0;
+        for(int i=0; i<n; i++){
+            update(vec[i],1);
+            int large = i+1-sum(vec[i]);
+            int small = sum(vec[i]-1);
+            res += 2*1ll*min(large,small)+1;
+        }
+        cout<<res<<endl;
+        return 0;
+    }
 
+///////////////////
+///////
+///////////////
