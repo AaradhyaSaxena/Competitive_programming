@@ -251,7 +251,98 @@ int main()
 	cout<<ans;
 } 
 
+//////////////////////////////
+/////////////////////
+////////////// 2020
+////////////////////
+
+// https://leetcode.com/problems/graph-connectivity-with-threshold/
+
+#define MAXX 100005
+int id[MAXX];
+void initialize(){
+    for(int i=0; i<MAXX; i++) id[i] = i;
+}
+
+int root(int x){
+    while(id[x]!=x){
+        id[x] = id[id[x]];
+        x = id[x];
+    }
+    return x;
+}
+
+void union1(int x, int y){
+    int p = root(x);
+    int q = root(y);
+    id[p] = id[q];
+}
+
+int gcd(int x, int y){
+    if(x<y) swap(x,y);
+    if(y==0) return x;
+    return gcd(y,x%y);
+}
+
+vector<bool> areConnected(int n, int threshold, vector<vector<int>>& queries) {
+    initialize();
+    int num = queries.size();
+    // for(int i=1; i<=n; i++){
+    //     for(int j=i+1; j<=n; j++){
+    //         if(gcd(i,j)> threshold) union1(i,j);
+    //     }
+    //     // if(gcd(queries[i][0],queries[i][1])>threshold){
+    //     //     union1(queries[i][0],queries[i][1]);
+    //     // }
+    // }
+    int t = threshold;
+    t++;
+    for (int i=t; i<=n; i++) {
+        int m = 1;
+        while (i*m <= n) {
+            union1(i, i*m);
+            m += 1;
+        }
+    }
+    vector<bool> res;
+    for(int i=0; i<num; i++){
+        if(root(queries[i][0])==root(queries[i][1])){
+            res.push_back(true);
+        }
+        else res.push_back(false);
+    }
+    for(int i=0; i<n; i++){
+        cout<<id[i]<<" ";
+    }
+    return res;
+}
+
 //////////
+///////////////////
 
+//// Cartridge question
 
+int helper(vector<int>& arr, int si, int ei){
+    int mid = (si+ei)/2;
+    
+    if(arr[mid-1]<arr[mid] && arr[mid] > arr[mid+1]){
+        return mid;
+    }
+    if(arr[mid-1]<arr[mid] && arr[mid] < arr[mid+1]){
+        return helper(arr, mid+1, ei);
+    }
 
+    return helper(arr, si, mid-1);
+}
+
+int Solution::solve(vector<int> &A, int B) {
+    int pos = helper(A, 0, A.size()-1);
+    
+    // int index = lower_bound(A.begin(), A.begin()+pos, B) - A.begin();
+    // if(A[index]==B) return index;
+    
+    // index = lower_bound(A.begin()+pos, A.end(), B, greater<int>()) - A.begin();
+    // if(A[index]==B) return index;
+    
+    return -1;
+}
