@@ -46,7 +46,6 @@ int main() {
 	    helper(n,k,x,y);
 
 	    // float ans = dp[x][y][1]/(dp[x][y][1] + dp[x][y][0]);
-
 	    // cout<<ans<<endl;
 	    // cout<<dp[x][y][1]<<" "<<dp[x][y][0]<<endl;
 	}
