@@ -6,7 +6,7 @@
 #define MAX 1000001 
 using namespace std; 
 
-/// O(n2)
+/// O(n2*d)
 
 int numofAP(int a[], int n) 
 { 
@@ -51,7 +51,7 @@ int main(){
     }
 }
 
-///// O(n)
+///// O(n*d)
 
 int numofAP(int a[], int n) 
 { 

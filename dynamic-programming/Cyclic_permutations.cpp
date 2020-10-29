@@ -6,7 +6,7 @@ using namespace std;
 int mod = 1e9+7;
 
 // first increasing then decreasing
-// ans = n! - 2^(n-1)
+// ans = n! - 2^(n-1) // 2^(n-1)>> ways to put numbers around peak to get unimodal distribution.
 
 int main (){
 	int n;
@@ -20,4 +20,5 @@ int main (){
 }
 
 // err (fn-pw)%mod >> (fn+mod-pw)%mod;
-////https://www.youtube.com/watch?v=p_TwWyHnDi8
+/// https://www.youtube.com/watch?v=vWHUmtiPRQw
+////////////////////////////////////////////////

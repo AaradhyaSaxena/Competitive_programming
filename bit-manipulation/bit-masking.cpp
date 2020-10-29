@@ -38,9 +38,10 @@ int solve(int i, int mask, int& n)
     int answer = INT_MAX;
     for(int j = 0; j < n; j++)
     {
-        if(mask&(1<<j))
-        	//min( answer, cost of jth worker doing ith job + solve(rest, mask jth bit))
+        if(mask&(1<<j)){
+        // min( answer, cost of jth worker doing ith job + solve(rest, mask jth bit))
             answer = min(answer, cost[j][i] + solve(i+1, (mask^(1<<j)), n));
+        }
     }
  
     return dp[i][mask] = answer;

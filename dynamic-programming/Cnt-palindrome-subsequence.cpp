@@ -46,7 +46,6 @@ int helper(int dp[][], string str, int i, int j){
     }
 }
 
-
 int countPS(string str){
     int n = str.length();
     memset(dp,-1,sizeof(dp));
