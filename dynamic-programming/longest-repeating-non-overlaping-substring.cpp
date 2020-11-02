@@ -2,6 +2,8 @@
 
 ///// longest repeating non-overlaping substring
 
+//// could also use auxilary matrix from KMP
+
 #include <bits/stdc++.h>
 using namespace std;
 

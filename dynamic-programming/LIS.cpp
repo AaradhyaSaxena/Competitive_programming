@@ -18,8 +18,7 @@ int minElements(int A[], int B[], int N, int M){
   map<int, int> map;
   // Iterate over the array
   for (int i = 0; i < N; i++){
-    // Store the indices of
-    // the array elements
+    // Store the indices of the array elements
     map[A[i]] = i;
   }
  
@@ -30,18 +29,14 @@ int minElements(int A[], int B[], int N, int M){
  
   for (int i = 0; i < M; i++) 
   {
-    // Check if element B[i]
-    // is in array A[]
-    if (map.find(B[i]) != 
-        map.end()) 
-    {
+    // Check if element B[i] is in array A[]
+    if (map.find(B[i]) != map.end()){
       int e = map[B[i]];
  
       // Perform Binary Search
       while (l <= r) 
       {
-        // Find the value of
-        // mid m
+        // Find the value of mid m
         int m = l + (r - l) / 2;
  
         // Update l and r
@@ -51,15 +46,13 @@ int minElements(int A[], int B[], int N, int M){
           r = m - 1;
       }
  
-      // If found better element
-      // 'e' for pos r + 1
+      // If found better element 'e' for pos r + 1
       if (r + 1 < subseq.size()) 
       {
         subseq[r + 1] = e;
       }
  
-      // Otherwise, extend the
-      // current subsequence
+      // Otherwise, extend the current subsequence
       else
       {
         subseq.push_back(e);
@@ -81,14 +74,11 @@ int main()
   int A[] = {1, 2, 3, 4, 5};
   int B[] = {2, 5, 6, 4, 9, 12};
  
-  int M = sizeof(A) / 
-          sizeof(A[0]);
-  int N = sizeof(B) /
-          sizeof(B[0]);
+  int M = sizeof(A) / sizeof(A[0]);
+  int N = sizeof(B) / sizeof(B[0]);
  
   // Function Call
-  cout << minElements(A, B, 
-                      M, N);
+  cout << minElements(A, B, M, N);
  
   return 0;
 }
