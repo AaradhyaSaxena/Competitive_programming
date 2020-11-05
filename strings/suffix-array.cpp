@@ -34,19 +34,12 @@ int *buildSuffixArray(char *txt, int n)
     return  suffixArr; 
 } 
   
-void printArr(int arr[], int n){ 
-    for(int i = 0; i < n; i++) 
-        cout << arr[i] << " "; 
-    cout << endl; 
-} 
-  
 int main() 
 { 
     char txt[] = "banana"; 
     int n = strlen(txt);
     int *suffixArr = buildSuffixArray(txt,  n);
 
-    printArr(suffixArr, n); 
     return 0; 
 } 
 
@@ -76,7 +69,6 @@ vector<int> kasai(string s, vector<int> sa)
     }
     return lcp;
 }
-
 
 //////////
 ////////////////
