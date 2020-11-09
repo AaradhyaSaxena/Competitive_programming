@@ -185,6 +185,56 @@ int main () {
 ////////////////////
 ///////////////////////////
 
+//// metro station
+
+#include<bits/stdc++.h>
+using namespace	std;
+
+void dfs(int i, vector<vector<int>> adj, vector<int> vis){
+	vis[i] =1;
+	int n = adj.size()-1;
+	for(int j=1; j<=n; j++){
+		if(adj[i][j]>0 and vis[j]==0){
+			dfs(j,adj,vis);
+		}
+	}
+}
+
+int main(){
+	int n,e; cin>>n>>e;
+	vector<vector<int>> adj(n+1, vector<int> (n+1, 0));
+	for(int i=0; i<e; i++){
+		int x,y,z;
+		cin>>x>>y>>z;
+		adj[x][y] = z;
+		adj[y][x] = z;
+	}
+	vector<int> vis(n+1,0);
+	int cnt =0;
+	for(int i=1; i<=n; i++){
+		if(vis[i]==0){
+			dfs(i,adj,vis);
+			cnt++;
+		}
+	}
+	if(cnt>1){
+		cout<<0<<endl;
+	}
+	else{
+		cout<<1<<endl;
+		//// apply kruskals
+	}
+
+}
+
+///////////////
+/////////////////
+///////////////////
+
+
+
+
+
 
 
 
