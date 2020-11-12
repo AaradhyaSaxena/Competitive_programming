@@ -1,70 +1,29 @@
 ////// fareye
 
-#include<bits/stdc++.h>
-using namespace std;
-#define MAX 100005
-
-int BIT[MAX];
-
-void upd(int idx, int val)
-{
-    for(int i=idx; i<MAX; i += i& ~(i-1)){
-    	BIT[i] += val;
-    }
-}
-
-int query(int val)
-{
-    int ret = 0;
-    while(val){
-        ret += BIT[val];
-        val -= val&~(val-1);
-    }
-    return ret;
-}
-
-int a[MAX];
-
-int main()
-{
-    int n,i;
-    cin>>n;
-    for(int i=1; i<=n; i++){
-        cin>>a[i];
-        if(a[i]%2 == 0)
-        upd(i,1);
-    }
-    int q,l,r,ch;
-    cin>>q;
-    while(q--){
-        cin>>ch>>l>>r;
-        if(ch==0){
-            if(r%2==1 && a[l]%2==0)
-            	upd(l,-1);
-            if(r%2==0 && a[l]%2==1)
-            	upd(l,1);
-            a[l]=r;
-        }
-        else if(ch==1){
-            int cnt = query(r)-query(l-1);
-            cout<<cnt<<endl;
-        }
-        else{
-            int cnt = query(r)-query(l-1);
-            cout<<(r-l+1)-cnt<<endl;
-        }
-    }
-	//   fclose(stdout);
-    return 0;
-}
-
-//////////
-
 vector<int> kthPerson(int k, vector<int> p, vector<int> q) {
+    int maxx = *max_element(p.begin(), p.end());
+    int dp[maxx+10];
+    for(int i=0; i<maxx+10; i++) dp[i]=0;
+    
     int nq = q.size(), np = p.size();
+    
+    for(int i=0; i<np; i++){
+        dp[p[i]]++;
+    }
+    for(int i=maxx; i>=0; i--){
+        dp[i] += dp[i+1];
+    }
+    // for(int i=0; i<maxx+2; i++){
+    //     cout<<dp[i]<<" ";
+    // }cout<<endl;
+    
     vector<int> ans;
     for(int i=0; i<nq; i++){
         int cnt = 0;
+        if(dp[q[i]]<k){
+            ans.push_back(0);
+            continue;
+        }
         for(int j=0; j<np; j++){
             if(p[j] >= q[i]){
                 cnt++;
@@ -80,3 +39,38 @@ vector<int> kthPerson(int k, vector<int> p, vector<int> q) {
     }
     return ans;
 }
+
+////// Gas station
+
+int Solution::canCompleteCircuit(const vector<int> &A, const vector<int> &B) {
+    int n = A.size(), sumA =0, sumB =0;
+    for(int i=0; i<n; i++){
+        sumA += A[i];
+        sumB += B[i];
+    }
+    if(sumB>sumA) return -1;
+    
+    int fuel = 0;
+    for(int i=0; i<n; i++){
+        fuel = 0;
+        for(int j=i; j<n; j++){
+            if(fuel<0) break;
+            fuel += (A[j]-B[j]);
+        }
+        if(fuel>=0){
+            return i;
+        }
+    }
+    return -1;
+}
+
+//////////
+
+
+
+
+
+
+
+
+
