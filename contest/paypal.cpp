@@ -135,7 +135,7 @@ int helper(vector<int> val, int i, int j){
     if(mp.find(make_pair(i,j))!=mp.end()){
         return mp[{i,j}];
     }
-    
+
     int cnt = 1000005;
     for(int k=i; k<j; k++){
         cnt = min(cnt, helper(val,i,k) + helper(val,k+1,j));
@@ -154,10 +154,9 @@ int splitTheArray(vector<int> val) {
 //////////////////////////
 ////// construct office
 //////////
+
 #include <bits/stdc++.h>
-
 using namespace std;
-
 #define pi pair<int, int>
 
 int minDist(int w, int h, vector<pi> arr){
