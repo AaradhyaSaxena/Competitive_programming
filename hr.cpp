@@ -660,14 +660,278 @@ int counts(int n, vector<int>& vs) {
     return ans;
 }
 
+///////////////////////////////////
+////// Cutting metal surplus
+
+int get_profit(vector<int> &rods, int sz, int cpc, int sl) {
+    int profit = 0;
+    for(int r : rods) {
+        int rodProf = 0;
+        if(r%sz == 0) {
+            rodProf += ((r/sz) * sz * sl) - (r/sz - 1) * cpc;
+        } else {
+            rodProf += ((r/sz) * sz * sl) - (r/sz) * cpc;
+        }
+        if(rodProf > 0)
+            profit += rodProf;
+    }
+    if(profit == 1913) {
+        cout << sz << endl;
+    }
+    return profit;
+}
+
+int maxProfit(int costPerCut, int salePrice, vector<int> lengths) {
+    int maxlen = 0, n = lengths.size();
+    for(int i=0; i<n; i++) {
+        maxlen = max(maxlen, lengths[i]);
+    }
+
+    int ret = 0;
+    for(int sz=1; sz<=maxlen; sz++) {
+        int prof = get_profit(lengths, sz, costPerCut, salePrice);
+        ret = max(prof, ret);
+    }
+    return ret;
+}
+
+////////////////////////
+////// Ancestral Names
+
+// def romanToDecimal(r):
+// 	romanDecimal = dict(I=1,V=5,X=10,L=50)
+// 	decimalEquivalent = 0
+// 	for i in range(len(r) - 1):
+// 		if romanDecimal[r[i]] < romanDecimal[r[i+1]]:
+// 			decimalEquivalent += romanDecimal[r[i]]*-1
+// 			continue
+// 		decimalEquivalent += romanDecimal[r[i]]
+// 	decimalEquivalent += romanDecimal[r[-1]]
+// 	return decimalEquivalent
+
+// def sortRoman(names):
+// 	names.sort(key = lambda x: (x.split()[0], romanToDecimal(x.split()[1])))
+// 	return names
+
+/////////////////////////////
+/////// Portfolio Balances
+
+//// need to find the error
+
+long maxValue(int n, vector<vector<int>> rounds){
+    int rounds_rows = rounds.size(), rounds_columns = rounds[0].size();
+    long max = 0;
+    vector<int> investments(n);
+    int i=0;
+    for(i=0;i<n;i++){
+        investments[i] = 0;
+    }
+    i=0;
+    while(i<rounds_rows){
+        int left = rounds[i][0], right = rounds[i][1], contribution = rounds[i][2];
+        right = right - 1;
+        int j=0;
+        for(j=left; j<=right; j++){
+           investments[j] += contribution;
+        }
+        i++;
+    }
+    max = investments[0];
+    for(i=1; i<n; i++){
+        if(investments[i] > max){
+            max = investments[i];
+        }
+    }
+    return max;
+}
+
+////////////////////
+/// slot machine
+
+// function slotWheels(history) {
+//     // Write your code here
+//     var charArr = [[],[]];
+//     var i,j,k;
+//     //convert strings from array history into characyers and store them in a 2d character array
+//     for (i = 0; i < history.length; i++) {
+//         charArr[i] = history[i].split('');
+//     }
+//     //create a 2D integer array that stores stops
+//     var finalSlots = new Array(charArr.length);
+//     for (i = 0; i < charArr.length; i++) {
+//       finalSlots[i] = new Array(3);
+//     }
+//     for (i = 0; i < charArr.length; i++) {
+//       for (j = 0; j < charArr[i].length; j++)
+//         finalSlots[i][j] = parseInt(charArr[i][j]);
+//     }
+//     //calculate total stops
+//     var totalStops = 0;
+//     for (k = 0; k < 3; k++) {
+//       //find maximum value in all rows
+//       var maximumValue = 0
+//       for (i = 0; i < charArr.length; i++) {
+//         var maxRow = 0;
+//         var maxRowIndex = 0;
+//         for (j = 0; j < charArr[i].length; j++) {
+//           //find maximum value in each row
+//           //store index
+//           if (maxRow < finalSlots[i][j]) {
+//             maxRow = finalSlots[i][j];
+//             maxRowIndex = j;
+//           }
+//         }
+//         //remove the maximum value of each row
+//         finalSlots[i][maxRowIndex] = 0;
+//         //update the maximum value of all rows
+//         if (maximumValue < maxRow)
+//           maximumValue = maxRow;
+//       }
+//       //add maximum vlue of all rows to totalStops for 3 times
+//       totalStops += maximumValue;
+//     }
+//     //print totalStops
+//     console.log(totalStops);
+//     return totalStops;
+// }
+//////////////////
+///////////////////////////
+///// Approximate matching
+
+// #function to calculate the score
+// def calculateScore(text, prefixString, suffixString):
+//     score = len(text)
+//     result = {}
+//     while score > 0:
+
+//         #for loop to iterate through sample word to calcualte the score
+//         for i in range(len(text) + 1 - score):
+//             substring = text[i:i + score]
+//             #calculate prefix score
+//             prefixScore = min(len(prefixString), len(substring))
+
+//             while substring[:prefixScore] != prefixString[-prefixScore:] and prefixScore > 0:
+//                 prefixScore -= 1
+
+//             #suffix score
+//             suffixScore = min(len(suffixString), len(substring))
+
+//             while substring[-suffixScore:] != suffixString[:suffixScore] and suffixScore > 0:
+//                 suffixScore -= 1
+//             #calculate the text score
+//             textScore = prefixScore + suffixScore
+
+//             if textScore not in result:
+//                 result[textScore] = []
+
+//             #return the result of the test score
+//             result[textScore].append(substring)
+
+//         score -= 1
+
+//     #calculate maximum test score
+//     maximum_textScore = max(result.keys())
+//     result[maximum_textScore].sort()
+
+//     return result[maximum_textScore][0]
+
+/////////////
+/////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ////////////////////////////
+///// POwer SUm
 
+#include <bits/stdc++.h> 
+using namespace std; 
+#define N 1000005 
+#define MAX 1e18 
+  
+// Vector to store powers greater than 3 
+vector<long int> powers; 
+// set to store perfect squares 
+set<long int> squares; 
+// set to store powers other than perfect squares 
+set<long int> s; 
 
+public static int count(int n, int l, int r) {
+    if (l > n/2)
+        return 0;
+    return Math.min(n/2 - l, r - n/2) + ((n%2 == 1) ? 0 : 1);
+}
+  
+void powersPrecomputation(){ 
+    for (long int i = 2; i < N; i++){ 
+        // pushing squares 
+        squares.insert(i * i); 
+  
+        // if the values is already a perfect square means present in the set 
+        if (squares.find(i) != squares.end()) 
+                continue; 
+        long int temp = i; 
+  
+        // run loop until some power of current number doesn't exceed MAX 
+        while (i * i <= MAX / temp){ 
+            temp *= (i * i); 
+            /* pushing only odd powers as even power of a number can always be 
+            expressed as a perfect square which is already present in set squares  */
+            s.insert(temp); 
+        } 
+    } 
+    // Inserting those sorted values of set into a vector 
+    for (auto x : s) 
+        powers.push_back(x); 
+} 
+  
+long int calculateAnswer(long int L, long int R) 
+{ 
+    // calculate perfect squares in range using sqrtl function 
+    long int perfectSquares = floor(sqrtl(R)) - floor(sqrtl(L - 1)); 
+  
+    // calculate upper value of R in vector using binary search 
+    long int high = (upper_bound(powers.begin(), powers.end(), R) - powers.begin()); 
+  
+    // calculate lower value of L in vector using binary search 
+    long int low = (lower_bound(powers.begin(), powers.end(), L) - powers.begin()); 
+  
+    // add into final answer 
+    perfectSquares += (high - low); 
+  
+    return perfectSquares; 
+} 
 
-
-
-
-
+int main(){ 
+    powersPrecomputation(); 
+    long int L = 12, R = 29; 
+    cout<<L<<R<<calculateAnswer(L, R) << endl;
+    return 0; 
+} 
 
 
 
