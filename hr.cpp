@@ -836,34 +836,147 @@ long maxValue(int n, vector<vector<int>> rounds){
 //     return result[maximum_textScore][0]
 
 /////////////
-/////////////////////
+////////////////////////////////
+////// Minimal area
 
+typedef long long int ll;
+ll dp[105][105];
 
+bool check(int i, int j, int l, int k){
+    if(dp[i+l][j+l] - dp[i-1][j+l] - dp[i+l][j-1] + dp[i-1][j-1] >= k){
+        return true;
+    }
+    return false;
+}
 
+long minArea(vector<int> x, vector<int> y, int k) {
+    int n = x.size();
+    ll m = INT_MIN;
+    for(int i=0; i<105; i++){
+        for(int j=0; j<105; j++){
+            dp[i][j] = 0;
+        }
+    }
+    for(int i=1; i<=n; i++){
+        dp[y[i]][x[i]]++;
+        m = max(m, 1ll*max(x[i], y[i]));
+    }
+    for (int i=1; i<=m; i++){
+        for (int j=1; j<=m; j++){
+            dp[i][j] += dp[i-1][j] + dp[i][j-1] - dp[i-1][j-1];
+        }
+    }
+    ll bst = m;
+    for (int i=1; i<m; i++){
+        for (int j=1; j<m; j++){
+            if (!check(i, j, min(m-i, m-j),k)) continue;
+            while (check(i, j, bst - 1,k)) bst--;
+            //cout << i << " " << j << " " << bst << "\n";
+        }
+    }
+    return (bst+2)*(bst+2);
+}
 
+//////////////////////////
+////////// profit targets
 
+/*
+def stockPairs(stocksProfit, target):
+    stock_values = set(stocksProfit)
+    ans = 0
+    for value in stock_values:
+        if target - value in stock_values and target != 2 * value:
+            ans += 1
+    if target % 2 == 0 and stocksProfit.count(target // 2) > 1:
+        ans += 2
+    return ans // 2
+*/
 
+////////////////////////
+////// product sales
+/*
+    public static long maximumProfit(List<Integer> inventory, long order) {
+    // Write your code here
+        int res = 0;
+        Queue<Integer> maxHeap = new PriorityQueue<>((a, b)->b-a);
+        maxHeap.addAll(inventory);
+        while(!maxHeap.isEmpty() && order-- > 0) {
+            int cur = maxHeap.poll();
+            res += cur;
+            if(cur > 0)
+                maxHeap.offer(cur-1);
+        }
+        return res;
+    }
+*/
 
+///////////////////////////////
+//////// Subsequence removal
 
+vector<int> findSubsequence(vector<int> arr) {
+    int n = arr.size();
+    vector<int> res;
+    map<int, vector<int> > m;
+    for(int i = 0; i < n; i++)
+    {
+        m[arr[i]].push_back(i);
+    }
+    int last = -1;
+    for(auto u: m)
+    {
+        if(u.second.size() > 1)
+        {
+            int req = u.second.size() - 1;
+            for(auto e: u.second)
+            {
+                if(e > last)
+                {
+                    req--;
+                    last = e;
+                    res.push_back(arr[e]);
+                }
+                if(req == 0)
+                    break;
+            }
+            if(req > 0)
+            {
+                res.clear();
+                res.push_back(-1);
+                break;
+            }
+        }
+    }
+    return res;
+}
+///////////////////////////////
+//// Minimum unique array sum
 
+#include <iostream> 
+using namespace std; 
+  
+int minSum(int arr[], int n){ 
+    int sum = arr[0], prev = arr[0]; 
+    for (int i = 1; i < n; i++) { 
+        if (arr[i] <= prev) { 
+            prev = prev + 1; 
+            sum = sum + prev; 
+        } 
+        else { 
+            sum = sum + arr[i]; 
+            prev = arr[i]; 
+        } 
+    } 
+    return sum; 
+} 
+  
+int main(){ 
+    int arr[] = { 2, 2, 3, 5, 6 }; 
+    int n = sizeof(arr) / sizeof(arr[0]); 
+    cout << minSum(arr, n) << endl; 
+    return 0; 
+} 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/////////////////////////
 
 ////////////////////////////
 ///// POwer SUm
@@ -873,12 +986,9 @@ using namespace std;
 #define N 1000005 
 #define MAX 1e18 
   
-// Vector to store powers greater than 3 
-vector<long int> powers; 
-// set to store perfect squares 
-set<long int> squares; 
-// set to store powers other than perfect squares 
-set<long int> s; 
+vector<long int> powers; // Vector to store powers greater than 3 
+set<long int> squares; // set to store perfect squares
+set<long int> s; // set to store powers other than perfect squares 
 
 public static int count(int n, int l, int r) {
     if (l > n/2)
@@ -909,17 +1019,13 @@ void powersPrecomputation(){
         powers.push_back(x); 
 } 
   
-long int calculateAnswer(long int L, long int R) 
-{ 
+long int calculateAnswer(long int L, long int R) { 
     // calculate perfect squares in range using sqrtl function 
     long int perfectSquares = floor(sqrtl(R)) - floor(sqrtl(L - 1)); 
-  
     // calculate upper value of R in vector using binary search 
     long int high = (upper_bound(powers.begin(), powers.end(), R) - powers.begin()); 
-  
     // calculate lower value of L in vector using binary search 
     long int low = (lower_bound(powers.begin(), powers.end(), L) - powers.begin()); 
-  
     // add into final answer 
     perfectSquares += (high - low); 
   
@@ -933,27 +1039,11 @@ int main(){
     return 0; 
 } 
 
+//////////////////////
+/////////////////
+////////////////////////////
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+///////////////
 
 
 
