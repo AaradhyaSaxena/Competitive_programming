@@ -990,7 +990,7 @@ vector<long int> powers; // Vector to store powers greater than 3
 set<long int> squares; // set to store perfect squares
 set<long int> s; // set to store powers other than perfect squares 
 
-public static int count(int n, int l, int r) {
+int count(int n, int l, int r) {
     if (l > n/2)
         return 0;
     return Math.min(n/2 - l, r - n/2) + ((n%2 == 1) ? 0 : 1);
@@ -1038,6 +1038,37 @@ int main(){
     cout<<L<<R<<calculateAnswer(L, R) << endl;
     return 0; 
 } 
+
+////
+
+public static void main(String[] args) {
+    int l1=0, r1=1;
+    int l2=25, r2=30;
+    System.out.println(solve(l1, r1));
+    System.out.println(solve(l2, r2));
+}
+
+private static int solve(int l, int r) {
+    boolean[] dp = new boolean[r + 1];
+    dp[0] = true;
+    dp[1] = true;
+    for(int i=2;i<=r;i++) {
+        for(int j=2;(int)Math.pow(i, j) < r;j++) {
+            dp[(int)Math.pow(i, j)] = true;
+        }
+    }
+    int res = 0;
+    for(int i=l;i<=r;i++) {
+        for(int j=0;j<=l;j++) {
+            if(dp[j] && dp[i-j]) {
+                res++;
+                break;
+            }
+        }
+    }
+    return res;
+}
+
 
 //////////////////////
 /////////////////
