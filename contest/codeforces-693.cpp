@@ -157,48 +157,137 @@ int main(){
 /////////////////
 ///// E
 
-#include<bits/stdc++.h> 
-#define endl '\n'
+#include <bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
-typedef long long int ll;
-     
-int main(){
-    ios_base::sync_with_stdio(0);
+ 
+typedef vector <int> vi;
+typedef pair <int, int> pii;
+typedef vector <long long> vll;
+typedef pair <long long, long long> pll;
+#define pb push_back   
+#define all(c) c.begin(), c.end()
+#define For(i, a, b) for (long long i = a; i < b; ++i)
+#define Forr(i, a, b) for (long long i = a; i > b; --i)
+#define um unordered_map
+#define F first
+#define S second
+#define ll long long 
+#define endl "\n"
+#define min(a,b) (a < b ? a : b)
+#define max(a,b) (a > b ? a : b)
+
+void solve() {
+    int n; cin >> n;
+    pair <pii, int> arr[n];     
+    For(i,0,n) {
+        int a,b; cin >> a >> b;
+        arr[i].first = {min(a,b), max(a,b)};
+        arr[i].second = i;
+    }
+    sort(arr, arr+n);
+    int min_val[n], min_index[n];
+
+    For(i,0,n) {
+        min_val[i] = arr[i].F.S;
+        min_index[i] = arr[i].S;
+    }
+    int ans[n];
+    For(i,0,n) {
+        int it = lower_bound(arr, arr+n, make_pair(make_pair(arr[i].F.F, -1), -1)) - arr;
+        --it;
+        if (it >= 0 and min_val[it] < arr[i].F.S) {
+            ans[arr[i].S] = min_index[it] + 1;
+        }
+        else {
+            ans[arr[i].S] = -1;
+        }
+        if (i > 0 and min_val[i-1] <= min_val[i]) {
+            min_val[i] = min_val[i-1];
+            min_index[i] = min_index[i-1];
+        }
+    }
+    For(i,0,n) {
+        cout << ans[i] << ' ';
+    }
+    cout << endl;
+}
+ 
+int main() {
+    int t = 1;
+    cin >> t;
+    while (t--) solve();
+    return 0;
+}
+
+////////////// F
+
+#include <bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+const int M_MAX = 200002;
+ 
+int t;
+int n, m;
+ 
+struct Block{
+    int a, b;
+};
+ 
+bool operator < (const Block &x, const Block &y){
+    return x.b < y.b;
+}
+Block v[M_MAX];
+ 
+int main(){{
+    ios_base::sync_with_stdio(false);
     cin.tie(0);
     cout.tie(0);
-    ll t;
     cin >> t;
-    while(t--){
-        ll n; cin>>n;
-        ll h[n] , w[n];
-        ll minhx=INT_MAX, minwy=INT_MAX;
-        ll minhy=w[0], minwx=h[0];
-        ll ih=0, iw=0;
-        for(int i=0; i<n; i++){
-            cin>>h[i]>>w[i];
-            if(h[i]<minhx){
-                minhx = h[i];
-                ih = i;
-                minhy = w[i];
+    while(t--)
+    {
+        cin >> n >> m;
+        for(int i = 1; i <= m; i++){
+            cin >> v[i].a >> v[i].b;
+        }
+        sort(v + 1, v + m + 1);
+        bool complete = true;
+        bool answer = true;
+        for(int i = 1; i <= m && answer == true; i++)
+        {
+            if(v[i].b == v[i - 1].b)
+                continue;
+            if(i < m && v[i].b == v[i + 1].b)
+            {
+                answer = complete;
+                continue;
             }
-            if(w[i]<minwy){
-                minwy = w[i];
-                iw = i;
-                minwx = h[i];
+            if(complete == true)
+            {
+                complete = false;
+                continue;
+            }
+            if(v[i].a == v[i - 1].a)
+            {
+                if((v[i].b - v[i - 1].b) % 2 == 0)
+                    answer = false;
+                else
+                    complete = true;
+            }
+            else
+            {
+                if((v[i].b - v[i - 1].b) % 2 == 1)
+                    answer = false;
+                else
+                    complete = true;
             }
         }
-        for(int i=0; i<n; i++){
-            ll temp1 = min(h[i],w[i]);
-            ll temp2 = max(h[i],w[i]);
-            if(temp1 > minhx and temp2 > minhy){
-                cout<<ih+1<<" ";
-            }else if(temp1 > minwy and temp2 > minwx){
-                cout<<iw+1<<" ";
-            }else{
-                cout<<-1<<" ";
-            }
-        }
-        cout<<endl;
+        if(complete == false)
+            answer = false;
+        if(answer == true)
+            cout << "YES\n";
+        else
+            cout << "NO\n";
     }
     return 0;
 }
