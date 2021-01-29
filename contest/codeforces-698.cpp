@@ -74,50 +74,75 @@ int main(){
 }
 //////////// C
 
-#include<bits/stdc++.h> 
-#define endl '\n'
+#include<bits/stdc++.h>
+#define int long long
 using namespace std;
-typedef long long int ll;
-     
-int main(){
-    ios_base::sync_with_stdio(0);
-    cin.tie(0);
-    cout.tie(0);
-    int t;
-    cin >> t;
-    while(t--){
-    	int n; cin>>n;
-    	ll arr[2*n+1];
-    	unordered_map<ll,ll> mp;
-    	for(int i=0; i<2*n; i++){
-    		cin>>arr[i];
-    		if(mp.find(arr[i]) != mp.end()){
-    			
-    		}
-    		mp[arr[i]] = 1;
-    	}
-
+ 
+const int maxn=200007;
+int t;
+int n,a[maxn],b[maxn],d[maxn];
+ 
+signed main(){
+    ios::sync_with_stdio(false);
+    cin.tie(0), cout.tie(0);
+    cin>>t;
+    while (t--){
+        cin>>n;
+        for (int i=0;i<2*n;++i) cin>>a[i];
+        sort(a,a+2*n,greater<int>());
+        for (int i=0;i<n;++i){
+            if (a[i*2]!=a[i*2+1]){
+                cout<<"NO\n";
+                goto cont;
+            }
+            b[i]=a[i*2];
+        }
+        for (int i=1;i<n;++i){
+            if (b[i-1]==b[i]||(b[i-1]-b[i])%(2*(n-i))){
+                cout<<"NO\n";
+                goto cont;
+            }
+            d[i]=(b[i-1]-b[i])/2/(n-i);
+        }
+        for (int i=1;i<n;++i){
+            b[n-1]-=2*i*d[i];
+        }
+        if (b[n-1]<=0||b[n-1]%(2*n)) cout<<"NO\n";
+        else cout<<"YES\n";
+ 
+        cont:;
     }
     return 0;
 }
-/////////////////
+/////////// D
 
-// #include<bits/stdc++.h> 
-// #define endl '\n'
-// using namespace std;
-// typedef long long int ll;
-     
-// int main(){
-//     ios_base::sync_with_stdio(0);
-//     cin.tie(0);
-//     cout.tie(0);
-//     int t;
-//     cin >> t;
-//     while(t--){
+#include<bits/stdc++.h>
+#define int long long
+using namespace std;
+ 
+const int maxn=200007;
+int t;
+int n,k;
+int x[maxn];
+ 
+signed main(){
+    ios::sync_with_stdio(false);
+    cin.tie(0), cout.tie(0);
+    cin>>t;
+    while (t--){
+        cin>>n>>k;
+        for (int i=0;i<n;++i) cin>>x[i];
+        sort(x,x+n);
+        int g=0;
+        for (int i=1;i<n;++i){
+            g=__gcd(g,x[i]-x[0]);
+        }
+        if ((k-x[0])%g) cout<<"NO\n";
+        else cout<<"YES\n";
+    }
+    return 0;
+}
 
-//     }
-//     return 0;
-// }
 /////////////////
 
 // #include<bits/stdc++.h> 
