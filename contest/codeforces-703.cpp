@@ -210,111 +210,117 @@ int main(){
 
 ///////// C
 
-#include<bits/stdc++.h> 
+//////// tle soln
+#include <bits/stdc++.h>
 using namespace std;
-typedef long long int ll;
  
-void solve(){
-	int n; 
-	cin>>n;
-	int l = 1, r = n;
-	int sec, sec1, sec2;
-	cout.flush();
-	while(l<r){
-		cout<<"? "<<l<<" "<<r<<endl; cout.flush();
-		cin>>sec;
-		cout<<"? "<<l<<" "<<sec<<endl; cout.flush();
-		cin>>sec1;
-		cout<<"? "<<sec<<" "<<r<<endl; cout.flush();
-		cin>>sec2;
-		if(sec==sec1){
-			r=sec-1;
-		}
-		else{
-			l=sec+1;
-		}
-	}
-	cout<<"! "<<l<<endl;
+int ask(int l, int r) {
+    if (l >= r) return -1;
+    cout << "? " << l << ' ' << r << endl;
+    int ans;
+    cin >> ans;
+    return ans;
 }
  
-int main(){
-	int T;
-	cin >> T;
-	while(T--){
-		solve();
-	}
-	return 0;
+int main() {
+    int n;
+    cin >> n;
+    int l = 1, r = n;
+    while (r > l) {
+        int smax = ask(l, r);
+        if (smax !=-1 and ask(l,smax)==smax) {
+            r = smax-1;
+        }
+        else if(ask(smax,r)!=-1){
+            l = smax+1;
+        }
+    }
+    cout << "! " << r << endl;
+    return 0;
 }
 
-/////////// c correct
+/////////// C correct
 
-#include<bits/stdc++.h> 
+#include <bits/stdc++.h>
 using namespace std;
-#define int long long
-
-map<pair<int,int>, int> qans;
  
-int query(int l,int r){
-	if(qans.count({l,r})){
-		return qans[{l,r}];
-	}
-	if(l == r){
-		return -1;
-	}
-	cout << "? " << l << " " << r << endl;
-	int ans;
-	cin >> ans;
-	return qans[{l,r}] = ans;
-}
-void answer(int x){
-	cout << "! " << x << endl;
-	exit(0);
+int ask(int l, int r) {
+    if (l >= r) return -1;
+    cout << "? " << l + 1 << ' ' << r + 1 << endl;
+    int ans;
+    cin >> ans;
+    return ans - 1;
 }
  
-void solve(){
-	int n;
-	cin >> n;
-	
-	int smx = query(1,n);
-	int ans;
-	if(smx == query(1,smx)){
-		// [1 to smx]
-		int L = 1, U = smx - 1;
-		while(L <= U){
-			int m = (L + U) / 2;
-			if(query(m,smx) == smx){
-				ans = m;
-				L = m + 1;
-			}
-			else{
-				U = m - 1;
-			}
-		}
-	}
-	else{
-		// [smx to r]
-		int L = smx + 1, U = n;
-		while(L <= U){
-			int m = (L + U) / 2;
-			if(query(smx,m) == smx){
-				ans = m;
-				U = m - 1;
-			}
-			else{
-				L = m + 1;
-			}
-		}
-	}
-	answer(ans);
+int main() {
+    int n;
+    cin >> n;
+    int l = 0, r = n;
+    while (r - l > 1) {
+        int m = (l + r) / 2;
+        int smax = ask(l, r - 1);
+        if (smax < m) {
+            if (ask(l, m - 1) == smax) {
+                r = m;
+            } else {
+                l = m;
+            }
+        } else {
+            if (ask(m, r - 1) == smax) {
+                l = m;
+            } else {
+                r = m;
+            }
+        }
+    }
+    cout << "! " << r << endl;
+    return 0;
 }
 
-int main(){
-	int T=1;
-	// cin >> T;
-	while(T--){
-		solve();
-	}
-	return 0;
+////////////
+///////////// c2
+
+#include <bits/stdc++.h>
+using namespace std;
+ 
+int ask(int l, int r) {
+    if (l >= r) return -1;
+    cout << "? " << l + 1 << ' ' << r + 1 << endl;
+    int ans;
+    cin >> ans;
+    return ans - 1;
+}
+ 
+int main() {
+    int n;
+    cin >> n;
+    int smax = ask(0, n - 1);
+    if (smax == 0 || ask(0, smax) != smax) {
+        int l = smax, r = n - 1;
+        while (r - l > 1) {
+            int m = (l + r) / 2;
+            if (ask(smax, m) == smax) {
+                r = m;
+            } else {
+                l = m;
+            }
+        }
+        cout << "! " << r + 1 << endl;
+    } else {
+        int l = 0, r = smax;
+        while (r - l > 1) {
+            int m = (l + r) / 2;
+            if (ask(m, smax) == smax) {
+                l = m;
+            } else {
+                r = m;
+            }
+        }
+        cout << "! " << l + 1 << endl;
+    }
+    return 0;
 }
 
-/////////////
+////////////////
+////////////////////
+
