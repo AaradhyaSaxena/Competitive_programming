@@ -9,20 +9,14 @@ typedef long long int ll;
 void solve(int tc = 0) {
 	int n; cin>>n;
 	ll arr[n];
-	ll minn = INT_MAX;
-	int odd = 0, even = 0;
 	for(int i=0; i<n; i++){
 		cin>>arr[i];
-		minn = min(minn, arr[i]);
-		if(arr[i]%2==0) even++;
-		else odd++;
 	}
-	if(odd==0 or even==0){
-		cout<<minn<<endl;
+	ll minn = arr[0];
+	for(int i=1; i<n; i++){
+		minn = minn &arr[i];
 	}
-	else{
-		cout<<0<<endl;
-	}
+	cout<<minn<<endl;
 }
  
 int main(){
