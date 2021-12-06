@@ -167,9 +167,62 @@ function registerHandlers() {
 	}
   }
 //////////////////////////////////////////////
-  
 
+// Wrapper
+// Write a wrap function that takes the execute function as an argument and 
+// returns a modified function so that the following requirements are met:
+// Any result returned by the function execute should be returned from the modified function unchanged.
+// If the function execute throws an error, the modified function should return null.
+// After the function execute has thrown an error, its future executions should be prevented and null should be returned.
+// Multiple wrapped functions can coexist.
+// The execute function doesn't take any arguments.
 
+function wrap (execute) {
+	// Return modified function
+}
+var errorExec = wrap(function () {
+	throw new Error('Error');
+});
+var resultExec = wrap(function () {
+	return "Result";
+});
+console.log(errorExec && errorExec()); // Should output null
+console.log(errorExec && resultExec()); // Should output "Result"
+
+// Solution::
+function wrap (execute) {
+    let did_fail = false;
+    
+    return function() { 
+        if (did_fail) {
+            return null;
+        }
+
+        try {
+            return execute(); 
+        } catch {
+            did_fail = true;
+            return null;
+        }
+    }
+}
+
+// This works as well, so just a question, why is the return stuff wrapped in a function?logically, it would seem
+function wrap (execute) {
+    let did_failed = false;
+    if (did_failed) {
+        return null;
+    }
+    try {
+        return execute();
+    } catch (e) {
+        did_failed = true;return null;
+    }
+}
+// would be functional, but I also recognize that the 'global' variable 'did_failed' would probably be effected by this.
+
+////////////////////////////////////////////////
+////////////////////////////////////////////////////////
 
 
 
