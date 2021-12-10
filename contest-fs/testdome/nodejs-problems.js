@@ -96,9 +96,43 @@ promise.then(result => console.log(result));
 
 module.exports.firstSuccessfulPromise = firstSuccessfulPromise;
 
+//////////////////////////////
+// quicksell
+// Implement a class with the following functionality
+/*
+		const myEmitter = new MyEmitter();
 
+		myEmitter.on('event', function(a, b) {
+		console.log(a, b, this, this === myEmitter);
+		});
 
+		myEmitter.emit('event', 'a', 'b');
+*/
 
+class EventEmitter{
+
+	function EventEmitter(){
+		listeners = {}
+	}
+	
+	function emit(eventName, ...args) {
+		let fns = this.listeners[eventName];
+		if (!fns) return false;
+		fns.forEach((f) => {
+			f(...args);
+		});
+		return true;
+	}
+
+	function on(eventName, fn){
+		this.listeners[eventName] = this.listeners[eventName] || [];
+		this.listeners[eventName].push(fn);
+		return this;
+	}
+
+};
+
+/// complete this
 
 
 
